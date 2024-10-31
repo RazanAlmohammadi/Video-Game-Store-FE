@@ -1,0 +1,19 @@
+nav{
+background-color: #F8F7FF;
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+align-items: center;
+}
+.logo {
+    width: 100px;
+    height: auto;
+}
+.navList{
+    width: 400px;
+display: flex;
+flex-direction: row;
+justify-content: space-around;
+align-items: center;
+list-style: none;
+}

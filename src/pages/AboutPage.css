@@ -1,0 +1,46 @@
+
+.about-page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    color: #333;
+    line-height: 1.6;
+}
+
+.about-page h1 {
+    font-size: 32px;
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+
+.about-page section {
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.about-page .about-us {
+    background-color: #fff3e0;
+}
+
+.about-page .mission {
+    background-color: #f8e1e7;
+ 
+}
+
+.about-page .collection {
+    background-color: #e1f0f8;
+   
+}
+
+.about-page .story {
+    background-color: #e8f8e1;
+}
+
+.about-page p {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 15px;
+}
