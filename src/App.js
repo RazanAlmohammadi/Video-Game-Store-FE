@@ -1,48 +1,48 @@
-
-import { useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import CircularProgress from "@mui/material/CircularProgress";
 import notfound from "./Images/not_found.jpg";
 import AboutPage from "./Pages/AboutPage.js";
-
 import ProductPage from "./Pages/ProductPage.js";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ProductDetail from "./Pages/ProductDetailPage.js";
-import HomePage from "./Pages/HomePage.js"
+import HomePage from "./Pages/HomePage.js";
 import WishListPage from "./Pages/WishListPage.js";
 import CartPage from "./Pages/CartPage.js";
-import Layout from "./Laytout/Layout.js";
 import NotFoundPage from "./Pages/NotFoundPage.js";
-
+import ProductsPagination from "./components/Products/ProductsPagination.js";
+import Layout from "./Laytout/Layout.js";
 
 function App() {
-  const [wishList, setWishList] = useState([]);
   const [productList, setProductList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-/* 
-  const [productResponse, setProductResponse] = useState({
-    products: [],
-    totalCount: 0,
-  }); */
-  const videoGameInfoUrl = "http://localhost:5125/api/v1/VideoGamesInfo?Limit=20"
+  const [page, setPage] = useState(1);
+  const [totalCount, setTotalCount] = useState(0);
+  const limit = 6; 
 
-  function getData() {
-    axios
-      .get(videoGameInfoUrl)
-      .then((response) => {
-        setProductList(response.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        setError(error);
-        setLoading(false);
-      });
-  }
+  const getData = async (page) => {
+    const offset = (page - 1) * limit;
+    const videoGameInfoUrl = `http://localhost:5125/api/v1/VideoGamesInfo?offset=${offset}&limit=${limit}`;
+
+    try {
+      const response = await axios.get(videoGameInfoUrl);
+      setProductList(response.data);
+      setTotalCount(response.data.totalCount); 
+    } catch (error) {
+      setError(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    getData();
-  }, []);
+    getData(page);
+  }, [page]); 
+
+  const handleChange = (event, value) => {
+    setPage(value);
+  };
 
   if (loading) {
     return (
@@ -60,53 +60,31 @@ function App() {
       </div>
     );
   }
-
-
+  const totalPages = Math.ceil(totalCount / limit);
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Layout wishList={wishList} />,
+     element: <Layout/>,
       children: [
-        {
-          index: true,
-          element: <HomePage />,
-        },
-        {
-          path: "/Home",
-          element: <HomePage />,
-        },
+        { index: true, element: <HomePage /> },
+        { path: "/Home", element: <HomePage /> },
         {
           path: "/Products",
-          element: <ProductPage products={productList}  />,
+          element: (
+            <>
+              <ProductPage products={productList} />
+              <ProductsPagination page={page} handleChange={handleChange} count={totalPages} />
+            </>
+          ),
         },
-        {
-          path: "/Products/:productId",
-          element: <ProductDetail />,
-        },
-
-        {
-          path: "/About",
-          element: <AboutPage />,
-        },
-
-        {
-          path: "/WishList",
-          element: <WishListPage wishList={wishList} />
-        },
-        {
-          path: "/cart",
-          element: <CartPage />
-        },
-        {
-          path: "*",
-          element: <NotFoundPage />,
-        },
-
-      ]
-    }]);
-
-
-
+        { path: "/Products/:productId", element: <ProductDetail /> },
+        { path: "/About", element: <AboutPage /> },
+        { path: "/WishList", element: <WishListPage  /> },
+        { path: "/cart", element: <CartPage /> },
+        { path: "*", element: <NotFoundPage /> },
+      ],
+    },
+  ]);
 
   return (
     <div className="App">
@@ -114,4 +92,5 @@ function App() {
     </div>
   );
 }
+
 export default App;

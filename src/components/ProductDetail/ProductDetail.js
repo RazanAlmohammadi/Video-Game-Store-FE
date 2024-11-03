@@ -59,26 +59,19 @@ export default function ProductDetail() {
     if (!productDetail) {
         return <div>Product not found.</div>;
     }
-
-
-    console.log("Product details:", {
-        gameName: productDetail.gameName,
-        description: productDetail.description,
-        totalRating: productDetail.totalRating,
-        gamePicturePath: productDetail.gamePicturePath
-    });
+ 
 
     
     return (
         <div className="product-detail">
-            <img src={productDetail.gamePicturePath} alt={`Image of ${productDetail.gameName}`} />
+            <img src={productDetail[0].gamePicturePath} alt={`Image of ${productDetail[0].gameName}`} />
             <div className="product-detail-info">
-                <h2>{productDetail.gameName}</h2>
-                <p>Description: {productDetail.description}</p>
+                <h2>{productDetail[0].gameName}</h2>
+                <p>Description: {productDetail[0].description}</p>
                 <Typography component="legend">User Rating</Typography>
                 <Rating
                     name="product-rating"
-                    value={productDetail.totalRating}
+                    value={productDetail[0].totalRating}
                     precision={0.5}
                     icon={<FavoriteIcon fontSize="inherit" sx={{ color: "pink" }} />}
                     emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}

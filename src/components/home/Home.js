@@ -1,26 +1,37 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import './Home.css';
 import background from "../../Videos/background.mp4";
 
 export default function Home() {
+    
     return (
         <div className="home-container">
-            <video autoPlay loop muted preload="auto" className="background-video">
-                <source src={background} type="video/mp4" />
-            </video>
-
-            {/* Overlay Content */}
-            <div className="home-content">
-                <h1>Welcome to Our Store!</h1>
-                <h3>We're delighted to have you here!</h3>
-                <Button variant="contained" color="error" className="btn">Buy Now</Button>
+            {/* Video Background Section */}
+            <div className="video-section">
+                <div className="section-inner">
+                    <video className="background-video" autoPlay muted loop>
+                        <source src={background} type="video/mp4" />
+                    </video>
+                    <div className="home-content">
+                        <h1>Welcome to Our Game Site</h1>
+                        <h3>Explore the latest games and updates</h3>
+                        <Button variant="contained" className="btn">Get Started</Button>
+                    </div>
+                </div>
             </div>
 
-            {/* Promo Banner */}
-            <div className="promo-banner">
-                <p> 🎉 Get 20% off your first purchase! Use code WELCOME20 🎉</p>
+            {/* Promo Banner Section */}
+            <div className="promo-banner-section">
+                <div className="promo-banner">
+                    Special Promotion: Get 20% off on all new games!
+                </div>
             </div>
+
+           
+          
         </div>
+
     );
 }
