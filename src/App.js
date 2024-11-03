@@ -19,11 +19,12 @@ function App() {
   const [error, setError] = useState(null);
   const [page, setPage] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
+  const [userInput, setUserInput] = useState("");
   const limit = 6; 
 
   const getData = async (page) => {
     const offset = (page - 1) * limit;
-    const videoGameInfoUrl = `http://localhost:5125/api/v1/VideoGamesInfo?offset=${offset}&limit=${limit}`;
+    const videoGameInfoUrl = `http://localhost:5125/api/v1/VideoGamesInfo?offset=${offset}&limit=${limit}&search=${userInput}`;
 
     try {
       const response = await axios.get(videoGameInfoUrl);
@@ -38,7 +39,7 @@ function App() {
 
   useEffect(() => {
     getData(page);
-  }, [page]); 
+  }, [page, userInput]); 
 
   const handleChange = (event, value) => {
     setPage(value);
@@ -72,8 +73,13 @@ function App() {
           path: "/Products",
           element: (
             <>
-              <ProductPage products={productList} />
-              <ProductsPagination page={page} handleChange={handleChange} count={totalPages} />
+              <ProductPage products={productList}
+                setUserInput={setUserInput}
+                userInput={userInput} />
+              <ProductsPagination page={page} 
+              handleChange={handleChange} 
+              count={totalPages}
+                />
             </>
           ),
         },

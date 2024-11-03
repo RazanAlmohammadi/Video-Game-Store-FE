@@ -11,7 +11,6 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import Button from "@mui/material/Button";
 
 export default function ProductDetail() {
-    
     const { productId } = useParams();
     const [productDetail, setProductDetail] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -25,17 +24,15 @@ export default function ProductDetail() {
                 setProductDetail(response.data);
                 setLoading(false);
             })
-
             .catch((error) => {
                 setError("Error");
-                setLoading(true);
+                setLoading(false); 
             });
     }
 
     useEffect(() => {
         fetchProductDetail();
     }, [productId]);
-
 
     if (loading) {
         return (
@@ -59,26 +56,23 @@ export default function ProductDetail() {
     if (!productDetail) {
         return <div>Product not found.</div>;
     }
- 
-
-    
+    console.log(productDetail);
     return (
         <div className="product-detail">
-            <img src={productDetail[0].gamePicturePath} alt={`Image of ${productDetail[0].gameName}`} />
+            <img src={productDetail.gamePicturePath || notfound} alt={`Image of ${productDetail.gameName}`} />
             <div className="product-detail-info">
-                <h2>{productDetail[0].gameName}</h2>
-                <p>Description: {productDetail[0].description}</p>
+                <h2>{productDetail.gameName}</h2>
+                <p>Description: {productDetail.description}</p>
                 <Typography component="legend">User Rating</Typography>
                 <Rating
                     name="product-rating"
-                    value={productDetail[0].totalRating}
+                    value={productDetail.totalRating}
                     precision={0.5}
                     icon={<FavoriteIcon fontSize="inherit" sx={{ color: "pink" }} />}
                     emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
                     readOnly
                 />
             </div>
-            
         </div>
     );
 }
