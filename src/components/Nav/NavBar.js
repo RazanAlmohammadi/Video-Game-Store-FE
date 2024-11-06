@@ -16,20 +16,25 @@ export default function NavBar(prop) {
   return (
     <nav>
       <img src={logo} alt="logo" className="logo" />
-      <div class="navList-container">
-      <ul className="navList">
-        <Link to="/Home"> <HomeIcon sx={{ color: "black" }} /></Link>
-        <Link to="Products"> <SportsEsportsIcon sx={{ color: "black" }} /></Link>
+      <div className="navList-container">
+        <ul className="navList">
+          <Link to="/Home"> <HomeIcon sx={{ color: "black" }} /></Link>
+          <Link to="Products"> <SportsEsportsIcon sx={{ color: "black" }} /></Link>
           <Link to="/wishList"><FavoriteIcon sx={{ color: "black" }} /></Link>
-        <Link to="/Cart"><ShoppingBasketIcon sx={{ color: "black" }} /></Link>
-         <Link to="About"><InfoIcon sx={{ color: "black" }} /></Link>
+          <Link to="/Cart"><ShoppingBasketIcon sx={{ color: "black" }} /></Link>
+          <Link to="About"><InfoIcon sx={{ color: "black" }} /></Link>
         </ul>
       </div>
-    
-     {/*   <Link to="/login"> <Avatar alt="user icon" src={user} /></Link> */}
-     <div>
+
+      {/*   <Link to="/login"> <Avatar alt="user icon" src={user} /></Link> */}
+      <div>
+        <Link to="/SignUp">
         <Button variant="contained" color="error" className="btn">Sign In</Button>
+        </Link>
+        <Link to ="/Login"> 
         <Button variant="contained" color="error" className="btn">Log In</Button>
+        </Link>
+       
       </div>
     </nav>
   )

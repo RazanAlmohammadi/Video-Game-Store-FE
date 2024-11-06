@@ -12,6 +12,8 @@ import CartPage from "./Pages/CartPage.js";
 import NotFoundPage from "./Pages/NotFoundPage.js";
 import ProductsPagination from "./components/Products/ProductsPagination.js";
 import Layout from "./Laytout/Layout.js";
+import UserSignUpPage from "./Pages/UserSignUpPage.js"
+import UserLoginPage from "./Pages/UserLoginPage.js";
 
 function App() {
   const [productList, setProductList] = useState([]);
@@ -88,6 +90,8 @@ function App() {
         { path: "/WishList", element: <WishListPage  /> },
         { path: "/cart", element: <CartPage /> },
         { path: "*", element: <NotFoundPage /> },
+        {path: "/SignUp", element:<UserSignUpPage/>},
+        {path:"/Login", element:<UserLoginPage/>},
       ],
     },
   ]);
