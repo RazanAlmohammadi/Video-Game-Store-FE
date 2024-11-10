@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import './Product.css';
 import { Link } from 'react-router-dom';
 import Button from "@mui/material/Button";
@@ -17,6 +16,7 @@ export default function Product(prop) {
           <div className="product-rating">
                 Rating: {product.totalRating}
             </div>
+            <div className ="product-price"> Price: {product.videoGameVersions[0].price}</div>
             <div className="button-container">
                 <Button
                     variant="contained"
