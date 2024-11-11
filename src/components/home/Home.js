@@ -4,32 +4,32 @@ import axios from 'axios';
 import './Home.css';
 import background from "../../Videos/background.mp4";
 import Button from '@mui/material/Button';
-import Pagination from '@mui/material/Pagination'; // Import MUI Pagination component
+import Pagination from '@mui/material/Pagination'; 
 
 export default function Home() {
     const [trendingGames, setTrendingGames] = useState([]);
     const [categories, setCategories] = useState([]);
-    const [currentPage, setCurrentPage] = useState(1); // Track the current page
-    const [totalPages, setTotalPages] = useState(0); // Track total pages for pagination
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(0); 
 
     useEffect(() => {
         const fetchCategories = async () => {
             try {
                 const response = await axios.get('http://localhost:5125/api/v1/Categories');
-                setCategories(response.data); // Set categories directly
-                setTotalPages(Math.ceil(response.data.length / 2)); // Calculate total pages (2 categories per page)
+                setCategories(response.data); 
+                setTotalPages(Math.ceil(response.data.length / 2)); 
             } catch (error) {
                 console.error('Error fetching categories:', error);
             }
         };
 
         fetchCategories();
-    }, []); // Fetch categories once on component mount
+    }, []); 
 
-    // Get categories for the current page
+    
     const getCategoriesForCurrentPage = () => {
         const startIndex = (currentPage - 1) * 2;
-        return categories.slice(startIndex, startIndex + 2); // Return 2 categories per page
+        return categories.slice(startIndex, startIndex + 2); 
     };
 
     const handlePageChange = (event, value) => {
@@ -40,14 +40,20 @@ export default function Home() {
         const fetchGames = async () => {
             try {
                 const response = await axios.get('http://localhost:5125/api/v1/VideoGamesInfo');
-                const games = response.data;
+                const games = response.data.videoGamesInfos;
 
-                // Filter and sort for trending games
-                const trending = games
-                    .filter(game => game.totalRating >= 4.5) // Example filter for high-rated games
-                    .sort((a, b) => b.totalRating - a.totalRating) // Sort by rating descending
-                    .slice(0, 4); // Limit to top 5
-                setTrendingGames(trending);
+                console.log("Fetched games:", games);
+
+                // Ensure games is an array before filtering
+                if (Array.isArray(games)) {
+                    const trending = games
+                        .filter(game => game.totalRating >= 4.5)
+                        .sort((a, b) => b.totalRating - a.totalRating)
+                        .slice(0, 4);
+                    setTrendingGames(trending);
+                } else {
+                    console.error("Unexpected data format for games:", games);
+                }
             } catch (error) {
                 console.error("Error fetching games:", error);
             }
@@ -55,6 +61,7 @@ export default function Home() {
 
         fetchGames();
     }, []);
+
 
     return (
         <div className="home-container">

@@ -3,10 +3,12 @@ import Button from "@mui/material/Button";
 import './SystemAdminProfile.css';  
 import { useNavigate } from "react-router-dom";
 
-export default function SystemAdminProfile({ systemAdminData, setSystemAdminData }) {
+export default function SystemAdminProfile({ systemAdminData, setSystemAdminData, isLoading }) {
     const navigate = useNavigate();
     //const token = localStorage.getItem("token");
-    
+    if (isLoading) {
+        return <h1> System admin loading</h1>
+    }
     function logOutHandler() {
         localStorage.removeItem("token");
         setSystemAdminData(null);

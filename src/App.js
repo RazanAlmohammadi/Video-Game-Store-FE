@@ -19,6 +19,7 @@ import ProtectedRoute from "./components/user/ProtectedRoute.js"
 import CategoryDetail from "./Pages/CategoryDetailPage.js";
 import DashBoard from "./components/dashBoard/DashBoard";
 import SystemAdminProfile from "./components/user/SystemAdminProfile.js";
+import ProductDashBoard from "./components/dashBoard/ProductDashBoard.js";
 
 function App() {
   const [productList, setProductList] = useState([]);
@@ -34,6 +35,8 @@ function App() {
   const [systemAdminData, setSystemAdminData] = useState(null);
   const [isSystemAdminDataLoading, setIsSystemAdminDataLoading] = useState(true);
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false);
+  const [cartList, setCartList] = useState([]);
+  const [wishList, setWishList] = useState([]);
 
 
   const limit = 6;
@@ -42,9 +45,10 @@ function App() {
     const offset = (page - 1) * limit;
 
     let videoGameInfoUrl = `http://localhost:5125/api/v1/VideoGamesInfo/Detailed?offset=${offset}&limit=${limit}&search=${userInput}`;
-
-    if (minPrice) videoGameInfoUrl += `&minPrice=${minPrice}`;
-    if (maxPrice) videoGameInfoUrl += `&maxPrice=${maxPrice}`;
+  
+      videoGameInfoUrl += `&minPrice=${minPrice}`;
+      videoGameInfoUrl += `&maxPrice=${maxPrice}`;
+    
     try {
       const response = await axios.get(videoGameInfoUrl);
       setProductList(response.data);
@@ -58,7 +62,7 @@ function App() {
 
   useEffect(() => {
     getData(page);
-  }, [page, userInput, , minPrice, maxPrice]);
+  }, [page, userInput, minPrice, maxPrice]);
 
   const handleChange = (event, value) => {
     setPage(value);
@@ -97,12 +101,12 @@ function App() {
       })
       .then((res) => {
         setSystemAdminData(res.data);
+        setIsAdminAuthenticated(true); 
         setIsSystemAdminDataLoading(false);
-        setIsAdminAuthenticated(true);
       })
       .catch((err) => {
+        setIsAdminAuthenticated(false); 
         setIsSystemAdminDataLoading(false);
-
         console.log(err);
       });
   }
@@ -157,7 +161,7 @@ function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Layout />,
+      element: <Layout wishList={wishList} />,
       children: [
         { index: true, element: <HomePage /> },
         { path: "/Home", element: <HomePage /> },
@@ -169,7 +173,11 @@ function App() {
                 setUserInput={setUserInput}
                 userInput={userInput}
                 setMinPrice={setMinPrice}
-                setMaxPrice={setMaxPrice} />
+                setMaxPrice={setMaxPrice}
+                cartList={cartList}
+                setCartList={setCartList}
+                wishList={wishList}
+                setWishList={setWishList} />
               <ProductsPagination page={page}
                 handleChange={handleChange}
                 count={totalPages}
@@ -180,8 +188,16 @@ function App() {
         { path: "/Products/:productId", element: <ProductDetail /> },
         { path: "/categories/:categoryName", element: <CategoryDetail /> },
         { path: "/About", element: <AboutPage /> },
-        { path: "/WishList", element: <WishListPage /> },
-        { path: "/cart", element: <CartPage /> },
+        { path: "/WishList", element: <WishListPage wishList={wishList} /> },
+        {
+          path: "/cart",
+          element: (
+            <CartPage
+              cartList={cartList}
+              setCartList={setCartList}
+              userData={userData}
+            />)
+        },
         { path: "*", element: <NotFoundPage /> },
         { path: "/SignUp", element: <UserSignUpPage /> },
         {
@@ -210,17 +226,31 @@ function App() {
           />
         },
         {
-          path: "/dashboard",
+          path: "/dashBoard",
           element: (
             <ProtectedRoute
               isUserDataLoading={isUserDataLoading}
               isAuthenticated={isAuthenticated}
               shouldCheckAdmin={true}
-              //decodedToken={decodedToken}
+              isAdminAuthenticated={isAdminAuthenticated}
               element={<DashBoard />}
             />
           ),
         },
+        {
+          path: "/product-dashboard",
+          element: (
+            <ProtectedRoute
+              isAdminAuthenticated={isAdminAuthenticated}
+              shouldCheckAdmin={true}
+              element={
+                <ProductDashBoard
+                  productList={productList} 
+                />
+              }
+            />
+          ),
+        }
       ],
     },
   ]);

@@ -1,15 +1,23 @@
 import React from 'react';
 import { Navigate } from "react-router-dom";
 
-export default function ProtectedRoute(prop) {
-    const { isUserDataLoading, isAuthenticated, element, decodedToken, shouldCheckAdmin, isAdminAuthenticated } = prop;
-
+export default function ProtectedRoute({
+    isUserDataLoading,
+    isAuthenticated,
+    element,
+    shouldCheckAdmin,
+    isAdminAuthenticated
+}) {
     if (isUserDataLoading) {
         return <div>Loading...</div>;
     }
 
+    console.log("isAuthenticated:", isAuthenticated);
+    console.log("isAdminAuthenticated:", isAdminAuthenticated);
+    console.log("shouldCheckAdmin:", shouldCheckAdmin);
+
     if (shouldCheckAdmin) {
-        return isAuthenticated && decodedToken.role === "SystemAdmin" ? element : <Navigate to="/login" />;
+        return isAdminAuthenticated ? element : <Navigate to="/" />; // Redirect non-admins to home page
     }
 
     return isAuthenticated ? element : <Navigate to="/Login" />;

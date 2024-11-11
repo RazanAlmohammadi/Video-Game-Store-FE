@@ -1,10 +1,10 @@
 import React from "react";
 import WishList from "../components/WishList/WishList";
-export default function WishListPage() {
-  
+export default function WishListPage(prop) {
+   const { wishList} =prop;
     return (
         <div>
-            <WishList  />
+            <WishList wishList={wishList} />
         </div>
     );
 }

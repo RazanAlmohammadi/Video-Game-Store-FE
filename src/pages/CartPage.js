@@ -1,6 +1,9 @@
 import React from 'react'
-import Cart from "../components/Cart/Cart"
-export default function CartPage() {
-    return <div><Cart /></div>;
+import CartList from '../components/Cart/CartList';
+export default function CartPage(prop) {
+    const { cartList, setCartList } = prop;
+    return <div><CartList
+        cartList={cartList}
+        setCartList={setCartList} /></div>;
 
 }
