@@ -1,64 +1,100 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import { Container, Typography, Paper, Box } from '@mui/material';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-export default function UserSignUp() {
 
+export default function UserSignUp() {
   const [userInfo, setUserInfo] = useState({ PersonName: "", PersonEmail: "", PersonPassword: "" });
+  const navigate = useNavigate();
+
   function onChangeHandler(event) {
-    setUserInfo({ ...userInfo, [event.target.id]: event.target.value, });
+    setUserInfo({ ...userInfo, [event.target.id]: event.target.value });
   }
 
-  const navigate = useNavigate();
   function SignUpNewUser() {
     const UserSignUpUrl = "http://localhost:5125/api/v1/Customer";
     axios.post(UserSignUpUrl, userInfo)
-    .then((response)=>{
-      console.log(response)
-      if(response.status===200){
-        navigate("/Login");
-      }
-    })
-    .catch((error)=>{
-      console.log(error);
-      if(error.status === 400){
-        if(error.response.data.errors.PersonEmail){
-          alert(error.response.data.errors.PersonEmail[0]);
-          return;
+      .then((response) => {
+        if (response.status === 200) {
+          navigate("/Login");
         }
-        if (error.response.data.errors.PersonPassword) {
-          alert(error.response.data.errors.PersonPassword[0]);
-          return;
-      }
-        if (error.response.data.errors.PersonName) {
-          alert(error.response.data.errors.PersonName[0]);
-          return;
+      })
+      .catch((error) => {
+        if (error.response && error.response.status === 400) {
+          const errorData = error.response.data.errors;
+          if (errorData.PersonEmail) {
+            alert(errorData.PersonEmail[0]);
+            return;
+          }
+          if (errorData.PersonPassword) {
+            alert(errorData.PersonPassword[0]);
+            return;
+          }
+          if (errorData.PersonName) {
+            alert(errorData.PersonName[0]);
+            return;
+          }
         }
+      });
   }
-  });
-}
+
   return (
-    <div>
-      <h1>UserSignUp</h1>
-      <TextField id="PersonName"
-        label="Name" variant="standard"
-        helperText="Plaese enter your name"
-        onChange={onChangeHandler}
-      />
-      <TextField id="PersonEmail"
-        label="Email" variant="standard"
-        helperText="Plaese enter your email"
-        onChange={onChangeHandler}
-      />
-      <TextField id="PersonPassword"
-        label="Password" variant="standard"
-        helperText="Plaese enter your password"
-        onChange={onChangeHandler}
-      />
-      <Button variant="contained" color="error" onClick={SignUpNewUser} > SignUp</Button>
-    </div>
-
-  )
+    <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh', 
+        backgroundColor: '#f4f4f9'
+      }}
+    >
+      <Container component="main" maxWidth="xs">
+        <Paper elevation={3} sx={{ padding: 3, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <Typography variant="h4" gutterBottom>
+            User SignUp
+          </Typography>
+          <TextField
+            id="PersonName"
+            label="Name"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            helperText="Please enter your name"
+            onChange={onChangeHandler}
+          />
+          <TextField
+            id="PersonEmail"
+            label="Email"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            helperText="Please enter your email"
+            onChange={onChangeHandler}
+          />
+          <TextField
+            id="PersonPassword"
+            label="Password"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            helperText="Please enter your password"
+            onChange={onChangeHandler}
+            type="password"
+          />
+          <Box sx={{ width: '100%', mt: 2 }}>
+            <Button
+              variant="contained"
+              color="primary"
+              fullWidth
+              onClick={SignUpNewUser}
+            >
+              Sign Up
+            </Button>
+          </Box>
+        </Paper>
+      </Container>
+    </Box>
+  );
 }
-

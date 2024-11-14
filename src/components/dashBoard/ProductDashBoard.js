@@ -1,17 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import './ProductDashBoard.css';
+import { useNavigate } from 'react-router-dom';
 import {
-    Button,
-    Popover,
-    TextField,
-    InputLabel,
-    MenuItem,
-    FormControl,
-    Select,
-    Checkbox,
-    ListItemText,
-    FormControlLabel,
-    Input,
+    Button, Popover, TextField, InputLabel,
+    MenuItem,FormControl,Select,Checkbox,
+    ListItemText,FormControlLabel,Input,
 } from '@mui/material';
 
 export default function ProductDashBoard() {
@@ -34,11 +28,16 @@ export default function ProductDashBoard() {
         totalRating: 0,
         yearOfRelease: '',
         gamePicturePath: '',
-        videoGameVersions: [],
+        videoGameVersions: [{
+            price: 0,
+            gameConsoleId: '', 
+        }],
     });
 
     const [formErrors, setFormErrors] = useState({});
     const [anchorEl, setAnchorEl] = useState(null);
+    const [editFields, setEditFields] = useState({});
+    const navigate = useNavigate();
 
     // Fetch all products
     const fetchAllData = async () => {
@@ -76,8 +75,8 @@ export default function ProductDashBoard() {
     const fetchStudios = async () => {
         try {
             const response = await axios.get('http://localhost:5125/api/v1/GameStudio');
-            setStudioList(response.data); 
-            console.log('Fetched studios:', response.data); 
+            setStudioList(response.data);
+            console.log('Fetched studios:', response.data);
         } catch (error) {
             console.error("Error fetching studios:", error);
         }
@@ -100,11 +99,32 @@ export default function ProductDashBoard() {
         fetchPublishers();
     }, []);
 
+    const handleBack = () => {
+        navigate(-1);
+    };
+
+    const deleteProduct = async (id) => {
+        try {
+            const token = localStorage.getItem('token');
+            const url = `http://localhost:5125/api/v1/VideoGamesInfo/${id}`;
+            const response = await axios.delete(url, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            console.log('Product deleted:', response.data);
+            fetchAllData(); 
+        } catch (error) {
+            console.error("Error deleting product:", error);
+        }
+    };
+
     const onChangeHandler = (event) => {
         const { name, value, type, checked } = event.target;
 
         if (type === 'checkbox') {
-          
+
             setProductInfo((prev) => ({
                 ...prev,
                 [name]: checked
@@ -112,7 +132,7 @@ export default function ProductDashBoard() {
                     : prev[name].filter((id) => id !== value),
             }));
         } else if (type === 'select-multiple') {
-            
+
             setProductInfo((prev) => ({
                 ...prev,
                 [name]: value,
@@ -135,7 +155,7 @@ export default function ProductDashBoard() {
         }
         return errors;
     };
-
+    console.log('Console List:', consoleList);
     const createProduct = async () => {
         const errors = validateForm();
         if (Object.keys(errors).length > 0) {
@@ -152,7 +172,10 @@ export default function ProductDashBoard() {
             gamePicturePath: productInfo.gamePicturePath,
             categoryIds: productInfo.categoryIds,
             gameStudioIds: productInfo.gameStudioIds,
-            videoGameVersions: productInfo.videoGameVersions,
+            videoGameVersions: productInfo.videoGameVersions.map(version => ({
+                price: version.price,
+                GameConsoleId: version.gameConsoleId,
+            })),
         };
 
         try {
@@ -173,11 +196,75 @@ export default function ProductDashBoard() {
         }
     };
 
-    return (
-        <div>
-            <h1>Product Dashboard</h1>
+    const updateGameName = async (id) => {
+        try {
+            const token = localStorage.getItem('token');
+            const newGameName = editFields[id]?.gameName;
+            if (newGameName) {
+                await axios.put(
+                    `http://localhost:5125/api/v1/VideoGamesInfo/${id}`,
+                    null,
+                    {
+                        headers: { Authorization: `Bearer ${token}` },
+                        params: { newGameName },
+                    }
+                );
+                fetchAllData();
+            }
+        } catch (error) {
+            console.error("Error updating game name:", error);
+        }
+    };
 
-            <Button variant="contained" onClick={(event) => setAnchorEl(event.currentTarget)}>
+    const updateYearOfRelease = async (id) => {
+        try {
+            const token = localStorage.getItem('token');
+            const newYearOfRelease = editFields[id]?.yearOfRelease;
+            if (newYearOfRelease) {
+                await axios.put(
+                    `http://localhost:5125/api/v1/VideoGamesInfo/${id}/year`,
+                    null,
+                    {
+                        headers: { Authorization: `Bearer ${token}` },
+                        params: { newYearOfRelease },
+                    }
+                );
+                fetchAllData();
+            }
+        } catch (error) {
+            console.error("Error updating year of release:", error);
+        }
+    };
+
+    const handleEditChange = (id, field, value) => {
+        setEditFields((prev) => ({
+            ...prev,
+            [id]: {
+                ...prev[id],
+                [field]: value,
+            },
+        }));
+    };
+
+    return (
+        <div className="dashboard-container">
+            <h1 className="dashboard-header">Product Dashboard</h1>
+            <Button
+                onClick={handleBack}
+                variant="contained"
+                style={{
+                    backgroundColor: '#a6cf92',
+                    color: '#FFFFFF',
+                    marginleft: '400px',
+                }}
+            >
+                &#8592; Back
+            </Button>
+            <Button
+                variant="contained"
+                onClick={(event) => setAnchorEl(event.currentTarget)}
+                className="create-product-button"
+            >
                 Create New Product
             </Button>
 
@@ -189,8 +276,9 @@ export default function ProductDashBoard() {
                     vertical: 'bottom',
                     horizontal: 'left',
                 }}
+                className="popover-content"
             >
-                {/* Product Form */}
+            
                 <TextField
                     name="gameName"
                     label="Game Name"
@@ -198,6 +286,7 @@ export default function ProductDashBoard() {
                     value={productInfo.gameName}
                     onChange={onChangeHandler}
                     required
+                    className="text-field"
                 />
                 <br />
                 <TextField
@@ -207,6 +296,7 @@ export default function ProductDashBoard() {
                     value={productInfo.description}
                     onChange={onChangeHandler}
                     required
+                    className="text-field"
                 />
                 <br />
                 <TextField
@@ -216,9 +306,10 @@ export default function ProductDashBoard() {
                     value={productInfo.yearOfRelease}
                     onChange={onChangeHandler}
                     required
+                    className="text-field"
                 />
                 <br />
-                {formErrors.yearOfRelease && <p style={{ color: 'red' }}>{formErrors.yearOfRelease}</p>}
+                {formErrors.yearOfRelease && <p className="error-message">{formErrors.yearOfRelease}</p>}
 
                 <TextField
                     name="totalRating"
@@ -232,11 +323,12 @@ export default function ProductDashBoard() {
                         min: 1,
                         max: 5,
                     }}
+                    className="text-field"
                 />
                 <br />
-                {formErrors.totalRating && <p style={{ color: 'red' }}>{formErrors.totalRating}</p>}
+                {formErrors.totalRating && <p className="error-message">{formErrors.totalRating}</p>}
 
-                <FormControl fullWidth>
+                <FormControl fullWidth className="form-control">
                     <InputLabel id="publisherId">Publisher</InputLabel>
                     <Select
                         name="publisherId"
@@ -253,35 +345,81 @@ export default function ProductDashBoard() {
                 </FormControl>
                 <br />
 
-               <FormControl fullWidth>
-    <InputLabel id="categoryIds">Categories</InputLabel>
-    <Select
-        name="categoryIds"
-        value={productInfo.categoryIds}
-        onChange={onChangeHandler}
-        multiple
-        required
-        label="Categories"
-        renderValue={(selected) => {
-            // Find the names of the selected categories
-            const selectedCategories = categoryList.filter((category) =>
-                selected.includes(category.categoryId)
-            );
-            return selectedCategories.map((category) => category.categoryName).join(', ');
-        }} 
-    >
-        {categoryList.map((category) => (
-            <MenuItem key={category.categoryId} value={category.categoryId}>
-                <Checkbox checked={productInfo.categoryIds.indexOf(category.categoryId) > -1} />
-                <ListItemText primary={category.categoryName} />
-            </MenuItem>
-        ))}
-    </Select>
-</FormControl>
+              
+                <FormControl fullWidth className="form-control">
+                    <InputLabel id="categoryIds">Categories</InputLabel>
+                    <Select
+                        name="categoryIds"
+                        value={productInfo.categoryIds}
+                        onChange={onChangeHandler}
+                        multiple
+                        required
+                        label="Categories"
+                        renderValue={(selected) => {
+                            const selectedCategories = categoryList.filter((category) =>
+                                selected.includes(category.categoryId)
+                            );
+                            return selectedCategories.map((category) => category.categoryName).join(', ');
+                        }}
+                    >
+                        {categoryList.map((category) => (
+                            <MenuItem key={category.categoryId} value={category.categoryId}>
+                                <Checkbox checked={productInfo.categoryIds.indexOf(category.categoryId) > -1} />
+                                <ListItemText primary={category.categoryName} />
+                            </MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
 
+         
+                <FormControl fullWidth className="form-control">
+                    <InputLabel id="consoleId">Console</InputLabel>
+                    <Select
+                        name="consoleId"
+                        value={productInfo.videoGameVersions[0].gameConsoleId || ''}
+                        onChange={(e) => {
+                            const { value } = e.target;
+                            setProductInfo((prev) => ({
+                                ...prev,
+                                videoGameVersions: [{
+                                    ...prev.videoGameVersions[0],
+                                    gameConsoleId: value,
+                                }],
+                            }));
+                        }}
+                        required
+                    >
+                        {consoleList.map((console) => (
+                            <MenuItem key={console.gameConsoleId} value={console.gameConsoleId}>
+                                {console.consoleName}
+                            </MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
+
+         
+                <TextField
+                    name="price"
+                    label="Price"
+                    variant="standard"
+                    value={productInfo.videoGameVersions[0].price}
+                    onChange={(e) => {
+                        const { value } = e.target;
+                        setProductInfo((prev) => ({
+                            ...prev,
+                            videoGameVersions: [{
+                                ...prev.videoGameVersions[0],
+                                price: value,
+                            }],
+                        }));
+                    }}
+                    required
+                    className="text-field"
+                />
                 <br />
 
-                <FormControl fullWidth>
+              
+                <FormControl fullWidth className="form-control">
                     <InputLabel id="gameStudioIds">Game Studios</InputLabel>
                     <Select
                         name="gameStudioIds"
@@ -291,7 +429,6 @@ export default function ProductDashBoard() {
                         required
                         label="Game Studios"
                         renderValue={(selected) => {
-                            
                             const selectedStudios = studioList.filter((studio) =>
                                 selected.includes(studio.gameStudioId)
                             );
@@ -306,27 +443,71 @@ export default function ProductDashBoard() {
                         ))}
                     </Select>
                 </FormControl>
-
                 <br />
 
                 <Button variant="contained" onClick={createProduct}>
                     Create Product
                 </Button>
             </Popover>
+           
+         
+            {loading && <p className="loading-message">Loading...</p>}
+            {error && <p className="error-message">Error: {error.message}</p>}
 
-            {/* Conditional Rendering */}
-            {loading && <p>Loading...</p>}
-            {error && <p>Error: {error.message}</p>}
+      
             {!loading && !error && (
-                <>
-                    <h2>List of Products</h2>
-                    <ul>
-                        {productList.map((product) => (
-                            <li key={product.videoGameInfoId}>{product.gameName}</li>
-                        ))}
-                    </ul>
-                </>
+                <ul className="product-list">
+                    {productList.map((product) => (
+                        <li key={product.videoGameInfoId} className="product-item">
+                            <h3>{product.gameName}</h3>
+                            <p>Year of Release: {product.yearOfRelease}</p>
+
+                         
+                            <TextField
+                                label="Update Game Name"
+                                variant="standard"
+                                value={editFields[product.videoGameInfoId]?.gameName || ''}
+                                onChange={(e) => handleEditChange(product.videoGameInfoId, 'gameName', e.target.value)}
+                            />
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                className="update-button"
+                                onClick={() => updateGameName(product.videoGameInfoId)}
+                            >
+                                Update Name
+                            </Button>
+
+                            <TextField
+                                label="Update Year of Release"
+                                variant="standard"
+                                value={editFields[product.videoGameInfoId]?.yearOfRelease || ''}
+                                onChange={(e) => handleEditChange(product.videoGameInfoId, 'yearOfRelease', e.target.value)}
+                            />
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                className="update-button"
+                                onClick={() => updateYearOfRelease(product.videoGameInfoId)}
+                            >
+                                Update Year
+                            </Button>
+
+                            <Button
+                                variant="outlined"
+                                color="error"
+                                className="delete-button"
+                                onClick={() => deleteProduct(product.videoGameInfoId)}
+                            >
+                                Delete
+                            </Button>
+                        </li>
+                    ))}
+                   
+                </ul>
             )}
+            
         </div>
     );
 }
+   

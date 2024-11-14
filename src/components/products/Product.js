@@ -3,6 +3,8 @@ import './Product.css';
 import { Link } from 'react-router-dom';
 import Button from "@mui/material/Button";
 import { Snackbar } from '@mui/material';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 export default function Product(prop) {
     const { product, cartList, setCartList, wishList, setWishList } = prop;
     const [open, setOpen] = useState(false);
@@ -40,33 +42,30 @@ export default function Product(prop) {
             </div>
             <div className ="product-price"> Price: {product.videoGameVersions[0].price}</div>
             <div className="button-container">
+               
                 <Button
                     variant="contained"
-                    color="error"
-                    className="btn"
-                    component={Link}
+                    style={{ backgroundColor: '#a6cf92', color: '#FFFFFF' }}
+                   component={Link}
                     to={`/Products/${product.videoGameInfoId}`}
                 >
                     More Details
-                </Button>
-                <Button onClick={() => addToCart(product)}> Add to cart </Button>
+                </Button>   
+                <div className="btn-container">
+                    <Button onClick={() => addToCart(product)} className="btn">
+                        <AddShoppingCartIcon sx={{ color: "black" }} />
+                    </Button>
+                    <Button onClick={() => addToFav(product)} className="btn">
+                        <FavoriteBorderIcon sx={{ color: "black" }} />
+                    </Button>
                 </div>
-            <Button
-                variant="contained"
-                color="error"
-                className="btn"
-                onClick={() => addToFav(product)}
-            >
-                Add to fav
-            </Button>
-            <Snackbar
-                open={open}
-                autoHideDuration={5000}
-                onClose={handleClose}
-                message={`A ${product.gameName} is added to the wishlist`}
-            />
-     
-            
+                <Snackbar
+                    open={open}
+                    autoHideDuration={5000}
+                    onClose={handleClose}
+                    message={`A ${product.gameName} is added to the wishlist`}
+                />
+            </div>
         </div>
     );
 }

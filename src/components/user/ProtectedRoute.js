@@ -17,7 +17,7 @@ export default function ProtectedRoute({
     console.log("shouldCheckAdmin:", shouldCheckAdmin);
 
     if (shouldCheckAdmin) {
-        return isAdminAuthenticated ? element : <Navigate to="/" />; // Redirect non-admins to home page
+        return isAdminAuthenticated ? element : <Navigate to="/" />; 
     }
 
     return isAuthenticated ? element : <Navigate to="/Login" />;

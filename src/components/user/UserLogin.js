@@ -7,10 +7,9 @@ import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 import Input from '@mui/material/Input';
-import { Button } from '@mui/material';
+import { Button, Box, Typography, Container, Paper } from '@mui/material';
 import axios from 'axios';
 import { Link, useNavigate } from "react-router-dom";
-
 
 function parseJwt(token) {
   try {
@@ -22,7 +21,6 @@ function parseJwt(token) {
         .map((char) => "%" + ("00" + char.charCodeAt(0).toString(16)).slice(-2))
         .join("")
     );
-
     return JSON.parse(jsonPayload);
   } catch (error) {
     console.error("Error decoding token:", error);
@@ -64,14 +62,12 @@ export default function UserLogin({ getUserData, getSystemAdminData }) {
           if (decodedToken) {
             console.log("Decoded token fields:", decodedToken);
 
-           
             if (decodedToken.role === "Customer") {
               getUserData();
               navigate("/UserProfile");
             } else if (decodedToken.role === "SystemAdmin") {
               getSystemAdminData();
               navigate("/SystemAdminProfile");
-              console.log(getSystemAdminData());
             } else {
               alert("Unknown user role.");
             }
@@ -87,41 +83,79 @@ export default function UserLogin({ getUserData, getSystemAdminData }) {
   }
 
   return (
-    <div>
-      <h1>UserLogin</h1>
-      <TextField
-        id="PersonEmail"
-        label="Email"
-        variant="standard"
-        helperText="Please enter your email"
-        onChange={onChangeHandler}
-      />
-      <FormControl sx={{ m: 1, width: '25ch' }} variant="standard">
-        <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
-        <Input
-          id="PersonPassword"
-          type={showPassword ? 'text' : 'password'}
-          onChange={onChangeHandler}
-          endAdornment={
-            <InputAdornment position="end">
-              <IconButton
-                aria-label={showPassword ? 'hide the password' : 'display the password'}
-                onClick={handleClickShowPassword}
-                onMouseDown={handleMouseDownPassword}
-              >
-                {showPassword ? <VisibilityOff /> : <Visibility />}
-              </IconButton>
-            </InputAdornment>
-          }
-        />
-      </FormControl>
-      <Button onClick={logInUser}>Login</Button>
-      <div>
-        <h1>Do not have an account yet?</h1>
-        <Link to="/SignUp">
-          <Button>Create an account</Button>
-        </Link>
-      </div>
-    </div>
+    <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh', 
+        backgroundColor: '#f4f4f9' 
+      }}
+    >
+      <Container component="main" maxWidth="xs">
+        <Paper
+          elevation={3}
+          sx={{
+            padding: 3,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            boxShadow: 3,
+          }}
+        >
+          <Typography variant="h4" gutterBottom color="primary">
+             Login
+          </Typography>
+          <TextField
+            id="PersonEmail"
+            label="Email"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            onChange={onChangeHandler}
+            sx={{ mb: 2 }}
+          />
+          <FormControl sx={{ width: '100%', mb: 2 }} variant="outlined">
+            <InputLabel htmlFor="PersonPassword">Password</InputLabel>
+            <Input
+              id="PersonPassword"
+              type={showPassword ? 'text' : 'password'}
+              onChange={onChangeHandler}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label={showPassword ? 'hide password' : 'show password'}
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              }
+              label="Password"
+            />
+          </FormControl>
+          <Button
+            variant="contained"
+            color="primary"
+            fullWidth
+            onClick={logInUser}
+            sx={{ mt: 2, mb: 2 }}
+          >
+            Login
+          </Button>
+          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+            <Typography variant="body2">
+              Do not have an account yet?&nbsp;
+              <Link to="/SignUp">
+                <Button variant="text" color="secondary">
+                  Create an account
+                </Button>
+              </Link>
+            </Typography>
+          </Box>
+        </Paper>
+      </Container>
+    </Box>
   );
 }

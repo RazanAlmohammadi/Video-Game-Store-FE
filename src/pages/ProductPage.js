@@ -2,14 +2,38 @@ import React from 'react';
 import Products from "../components/Products/Products";
 import Form from "../components/Form/Form";
 import PriceRangeForm from "../components/Products/PriceRangeForm";
-export default function ProductPage({ products, setUserInput, userInput, setMinPrice,
-  setMaxPrice, cartList,setCartList, wishList, setWishList, }) {
+import { Container, Box } from '@mui/material';
+import './ProductPage.css';
+
+export default function ProductPage({
+  products,
+  setUserInput,
+  userInput,
+  setMinPrice,
+  setMaxPrice,
+  cartList,
+  setCartList,
+  wishList,
+  setWishList,
+}) {
   return (
-    <div>
-      <Form setUserInput={setUserInput} />
-      <PriceRangeForm setMinPrice={setMinPrice} setMaxPrice={setMaxPrice} />
-      <Products productList={products} userInput={userInput} cartList={cartList}
-        setCartList={setCartList} wishList={wishList} setWishList={setWishList} />
-    </div>
+    <Container className="product-page" maxWidth="lg">
+      <Box className="form-section" sx={{ mb: 4 }}>
+        <Form setUserInput={setUserInput} />
+      </Box>
+      <Box className="price-range-section" sx={{ mb: 4 }}>
+        <PriceRangeForm setMinPrice={setMinPrice} setMaxPrice={setMaxPrice} />
+      </Box>
+      <Box className="products-section">
+        <Products
+          productList={products}
+          userInput={userInput}
+          cartList={cartList}
+          setCartList={setCartList}
+          wishList={wishList}
+          setWishList={setWishList}
+        />
+      </Box>
+    </Container>
   );
 }

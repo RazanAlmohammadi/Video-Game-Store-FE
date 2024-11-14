@@ -1,7 +1,7 @@
-import React from 'react'
-import "./NavBar.css"
-import logo from "../../Images/logo.png";
-import { Link } from 'react-router-dom';
+import React from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import "./NavBar.css";
+import logo from "../../Images/logo.jpg";
 import HomeIcon from '@mui/icons-material/Home';
 import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
 import InfoIcon from '@mui/icons-material/Info';
@@ -10,32 +10,67 @@ import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 import Avatar from "@mui/material/Avatar";
 import user from "../../Images/user-icon.png";
 import Button from '@mui/material/Button';
+import LineAxisIcon from '@mui/icons-material/LineAxis';
 
-import { Badge } from '@mui/material';
-export default function NavBar(prop) {
+export default function NavBar({ isAuthenticated, isAdminAuthenticated }) {
+  const location = useLocation();
+
+  const getLinkClass = (path) => {
+    return location.pathname === path ? "active-link" : "";
+  };
+
   return (
     <nav>
       <img src={logo} alt="logo" className="logo" />
       <div className="navList-container">
         <ul className="navList">
-          <Link to="/Home"> <HomeIcon sx={{ color: "black" }} /></Link>
-          <Link to="Products"> <SportsEsportsIcon sx={{ color: "black" }} /></Link>
-          <Link to="/wishList"><FavoriteIcon sx={{ color: "black" }} /></Link>
-          <Link to="/Cart"><ShoppingBasketIcon sx={{ color: "black" }} /></Link>
-          <Link to="About"><InfoIcon sx={{ color: "black" }} /></Link>
+          <li><Link to="/Home" className={getLinkClass("/Home")}><HomeIcon sx={{ color: "black" }} /></Link></li>
+          <li><Link to="/Products" className={getLinkClass("/Products")}><SportsEsportsIcon sx={{ color: "black" }} /></Link></li>
+          <li><Link to="/wishList" className={getLinkClass("/wishList")}><FavoriteIcon sx={{ color: "black" }} /></Link></li>
+          <li><Link to="/Cart" className={getLinkClass("/Cart")}><ShoppingBasketIcon sx={{ color: "black" }} /></Link></li>
+          <li><Link to="/About" className={getLinkClass("/About")}><InfoIcon sx={{ color: "black" }} /></Link></li>
+          {isAuthenticated && !isAdminAuthenticated && (
+            <li><Link to="/order-history"><LineAxisIcon sx={{ color: "black" }} /> </Link></li>
+          )}
+          {isAdminAuthenticated && (
+            <li><Link to="/Dashboard"><LineAxisIcon sx={{ color: "black" }} /> </Link></li>
+          )}
         </ul>
       </div>
 
-      {/*   <Link to="/login"> <Avatar alt="user icon" src={user} /></Link> */}
-      <div>
-        <Link to="/SignUp">
-        <Button variant="contained" color="error" className="btn">Sign In</Button>
-        </Link>
-        <Link to ="/Login"> 
-        <Button variant="contained" color="error" className="btn">Log In</Button>
-        </Link>
-       
+      <div className="auth-links">
+        {isAuthenticated && !isAdminAuthenticated ? (
+
+          <Link to="/UserProfile">
+            <Avatar alt="user icon" src={user} />
+          </Link>
+        ) : isAdminAuthenticated ? (
+
+          <Link to="/SystemAdminProfile">
+            <Avatar alt="admin icon" src={user} />
+          </Link>
+        ) : (
+
+          <>
+            <Link to="/SignUp">
+              <Button
+                variant="contained"
+                style={{ backgroundColor: '#a6cf92', color: '#FFFFFF' }}
+              >
+                Sign Up
+              </Button>
+            </Link>
+            <Link to="/Login">
+              <Button
+                variant="contained"
+                style={{ backgroundColor: '#a6cf92', color: '#FFFFFF' }}
+              >
+                Log In
+              </Button>
+            </Link>
+          </>
+        )}
       </div>
     </nav>
-  )
+  );
 }

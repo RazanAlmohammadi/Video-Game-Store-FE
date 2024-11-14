@@ -20,6 +20,8 @@ import CategoryDetail from "./Pages/CategoryDetailPage.js";
 import DashBoard from "./components/dashBoard/DashBoard";
 import SystemAdminProfile from "./components/user/SystemAdminProfile.js";
 import ProductDashBoard from "./components/dashBoard/ProductDashBoard.js";
+import UserManagementDashboard from "./components/dashBoard/UserManagementDashboard.js";
+import UserOrderHistory from "./components/Order/UserOrderHistory.js";
 
 function App() {
   const [productList, setProductList] = useState([]);
@@ -46,8 +48,11 @@ function App() {
 
     let videoGameInfoUrl = `http://localhost:5125/api/v1/VideoGamesInfo/Detailed?offset=${offset}&limit=${limit}&search=${userInput}`;
   
-      videoGameInfoUrl += `&minPrice=${minPrice}`;
-      videoGameInfoUrl += `&maxPrice=${maxPrice}`;
+    if (parseFloat(minPrice) > parseFloat(maxPrice)) {
+      return;
+    }
+    if (minPrice) videoGameInfoUrl += `&minPrice=${minPrice}`;
+    if (maxPrice) videoGameInfoUrl += `&maxPrice=${maxPrice}`;
     
     try {
       const response = await axios.get(videoGameInfoUrl);
@@ -85,10 +90,10 @@ function App() {
         setIsUserDataLoading(false);
         console.log(err);
       });
-    console.log(token, "from app");
+   
   }
 
-  console.log(userData, "from app");
+ 
 
   function getSystemAdminData() {
     setIsSystemAdminDataLoading(true);
@@ -161,7 +166,9 @@ function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Layout wishList={wishList} />,
+      element: <Layout wishList={wishList}
+        isAuthenticated={isAuthenticated}
+        isAdminAuthenticated={isAdminAuthenticated} />,
       children: [
         { index: true, element: <HomePage /> },
         { path: "/Home", element: <HomePage /> },
@@ -185,7 +192,11 @@ function App() {
             </>
           ),
         },
-        { path: "/Products/:productId", element: <ProductDetail /> },
+        {
+          path: "/Products/:productId", element: <ProductDetail 
+            products={productList}
+          cartList={cartList}
+            setCartList={setCartList} /> },
         { path: "/categories/:categoryName", element: <CategoryDetail /> },
         { path: "/About", element: <AboutPage /> },
         { path: "/WishList", element: <WishListPage wishList={wishList} /> },
@@ -195,7 +206,7 @@ function App() {
             <CartPage
               cartList={cartList}
               setCartList={setCartList}
-              userData={userData}
+              isAuthenticated={isAuthenticated}
             />)
         },
         { path: "*", element: <NotFoundPage /> },
@@ -223,6 +234,7 @@ function App() {
             systemAdminData={systemAdminData}
             isLoading={isSystemAdminDataLoading}
             setSystemAdminData={setSystemAdminData}
+            setIsAdminAuthenticated={setIsAdminAuthenticated}
           />
         },
         {
@@ -245,12 +257,30 @@ function App() {
               shouldCheckAdmin={true}
               element={
                 <ProductDashBoard
-                  productList={productList} 
+                 
                 />
               }
             />
           ),
-        }
+        },
+        {
+          path: "/userManagement-Dashboard",
+        element: (
+          <ProtectedRoute
+            isAdminAuthenticated={isAdminAuthenticated}
+            shouldCheckAdmin={true}
+            element={
+              <UserManagementDashboard
+
+              />
+            }
+          />
+        ),
+        },
+        {
+          path:"/order-history",
+          element:<UserOrderHistory/>
+        },
       ],
     },
   ]);

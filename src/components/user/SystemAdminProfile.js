@@ -3,18 +3,24 @@ import Button from "@mui/material/Button";
 import './SystemAdminProfile.css';  
 import { useNavigate } from "react-router-dom";
 
-export default function SystemAdminProfile({ systemAdminData, setSystemAdminData, isLoading }) {
+export default function SystemAdminProfile({ systemAdminData, setSystemAdminData, isLoading, setIsAdminAuthenticated }) {
     const navigate = useNavigate();
     //const token = localStorage.getItem("token");
     if (isLoading) {
-        return <h1> System admin loading</h1>
+        return <div className="loading-spinner">Loading...</div>;  
     }
+    
     function logOutHandler() {
-        localStorage.removeItem("token");
-        setSystemAdminData(null);
-        alert("Logged out successfully.");
-        navigate("/login"); 
+        const confirmed = window.confirm("Are you sure you want to log out?");
+        if (confirmed) {
+            localStorage.removeItem("token");
+            setSystemAdminData(null);
+            alert("Logged out successfully.");
+            navigate("/login");
+            setIsAdminAuthenticated(false)
+        }
     }
+
    
 
     console.log(systemAdminData, "from admin profile");

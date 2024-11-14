@@ -49,7 +49,7 @@
     position: relative;
     text-align: center;
     z-index: 2;
-    color: white;
+    color: #F2DFD7;
     padding: 20px;
 }
 
@@ -62,7 +62,7 @@
 
 .promo-banner-section {
     position: relative;
-    background-color: #c7eeb4;
+    background-color: #a6cf92;
     color: white;
     padding: 20px 0;
     text-align: center;
@@ -83,7 +83,7 @@
 @keyframes moveBannerText {
     0% {
         transform: translateX(100%);
-        /* Start off to the right */
+       
     }
 
     50% {
@@ -196,4 +196,8 @@
 .game-card a {
     text-decoration: none;
     color: inherit;
+}
+.home-content h1 {
+    color: white;
+  
 }

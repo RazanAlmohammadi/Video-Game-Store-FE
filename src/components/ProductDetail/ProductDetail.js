@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import CircularProgress from "@mui/material/CircularProgress";
 import notfound from "../../Images/not_found.jpg";
@@ -9,15 +9,22 @@ import Rating from "@mui/material/Rating";
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import Button from "@mui/material/Button";
+import { Box, Paper } from "@mui/material";
 
-export default function ProductDetail() {
+export default function ProductDetail({ cartList, setCartList }) {
     const { productId } = useParams();
+    const navigate = useNavigate();
     const [productDetail, setProductDetail] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const url = `http://localhost:5125/api/v1/VideoGamesInfo/${productId}`;
 
-    function fetchProductDetail() {
+    useEffect(() => {
+        fetchProductDetail();
+    }, [productId]);
+
+    // Fetch product detail
+    const fetchProductDetail = () => {
         axios
             .get(url)
             .then((response) => {
@@ -26,29 +33,36 @@ export default function ProductDetail() {
             })
             .catch((error) => {
                 setError("Error");
-                setLoading(false); 
+                setLoading(false);
             });
-    }
+    };
 
-    useEffect(() => {
-        fetchProductDetail();
-    }, [productId]);
+    // Add product to cart
+    const addToCart = (product) => {
+        const isInclude = cartList.some((item) => item.videoGameInfoId === product.videoGameInfoId);
+        if (!isInclude) {
+            setCartList([...cartList, { ...product, quantity: 1 }]);
+        }
+    };
+
+    const handleBack = () => {
+        navigate(-1);
+    };
 
     if (loading) {
         return (
             <div className="progress">
                 <CircularProgress />
-                <Typography variant="h6">Loading product details...</Typography>
+                <Typography variant="h6" color="textSecondary">Loading product details...</Typography>
             </div>
         );
     }
 
     if (error) {
-        console.log(error);
         return (
-            <div>
+            <div className="error-container">
                 <img className="error" src={notfound} alt="404 Not Found" />
-                <Typography variant="h6">Oops! Something went wrong. Please try again later.</Typography>
+                <Typography variant="h6" color="error">Oops! Something went wrong. Please try again later.</Typography>
             </div>
         );
     }
@@ -56,23 +70,52 @@ export default function ProductDetail() {
     if (!productDetail) {
         return <div>Product not found.</div>;
     }
-    console.log(productDetail);
+
     return (
-        <div className="product-detail">
-            <img src={productDetail.gamePicturePath || notfound} alt={`Image of ${productDetail.gameName}`} />
-            <div className="product-detail-info">
-                <h2>{productDetail.gameName}</h2>
-                <p>Description: {productDetail.description}</p>
-                <Typography component="legend">User Rating</Typography>
-                <Rating
-                    name="product-rating"
-                    value={productDetail.totalRating}
-                    precision={0.5}
-                    icon={<FavoriteIcon fontSize="inherit" sx={{ color: "pink" }} />}
-                    emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
-                    readOnly
-                />
-            </div>
-        </div>
+        <Box className="product-detail">
+            <Paper elevation={4} className="product-detail-container">
+             
+                <Button
+                    onClick={handleBack}
+                    variant="contained"
+                    style={{ position: 'absolute', left: 30, top: 30, backgroundColor: '#a6cf92', color: '#FFFFFF' }}
+                >
+                    &#8592; Back
+                </Button>
+
+                <Box className="product-detail-content">
+                    <img
+                        src={productDetail.gamePicturePath || notfound}
+                        alt={`Image of ${productDetail.gameName}`}
+                        className="product-image"
+                    />
+                    <Box className="product-detail-info">
+                        <Typography variant="h4" gutterBottom className="product-name">{productDetail.gameName}</Typography>
+                        <Typography variant="body1" paragraph>{productDetail.description}</Typography>
+
+                        <Box className="rating-cart-container">
+                            <Box>
+                                <Typography variant="h6" component="legend">User Rating</Typography>
+                                <Rating
+                                    name="product-rating"
+                                    value={productDetail.totalRating}
+                                    precision={0.5}
+                                    icon={<FavoriteIcon fontSize="inherit" sx={{ color: "pink" }} />}
+                                    emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
+                                    readOnly
+                                />
+                            </Box>
+                            <Button
+                                onClick={() => addToCart(productDetail)}
+                                variant="contained"
+                                style={{ backgroundColor: '#a6cf92', color: '#FFFFFF', marginTop: 0 }}
+                            >
+                                Add to Cart
+                            </Button>
+                        </Box>
+                    </Box>
+                </Box>
+            </Paper>
+        </Box>
     );
 }

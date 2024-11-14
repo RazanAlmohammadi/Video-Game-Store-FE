@@ -1,5 +1,6 @@
 import React from 'react';
-import { Button } from "@mui/material";
+import { Button, Typography, Box } from "@mui/material";
+import './CartItem.css'; 
 
 export default function CartItem(prop) {
     const { cart, cartList, setCartList } = prop;
@@ -32,30 +33,38 @@ export default function CartItem(prop) {
     }
 
     return (
-        <div>
-            <p>Name: {cart.gameName}</p>
-            <p>Price: {cart.videoGameVersions[0].price}</p>
+        <div className="cart-item-container">
+            <div className="cart-item-details">
+                <Typography variant="h6" className="cart-item-name">{cart.gameName}</Typography>
+                <Typography variant="body1" className="cart-item-price">Price: ${cart.videoGameVersions[0].price}</Typography>
+            </div>
 
-            <Button
-                variant="contained"
-                onClick={() => increaseProductQuantity(cart.videoGameInfoId)}
-            >
-                +
-            </Button>
-            <p>Quantity: {cart.quantity}</p>
-            <Button
-                variant="contained"
-                onClick={() => decreaseProductQuantity(cart.videoGameInfoId)}
-            >
-                -
-            </Button>
-
-            <Button
-                variant="contained"
-                onClick={() => removeProduct(cart.videoGameInfoId)}
-            >
-                Delete
-            </Button>
+            <div className="cart-item-actions">
+                <Button
+                    className="cart-item-button"
+                    variant="contained"
+                    onClick={() => increaseProductQuantity(cart.videoGameInfoId)}
+                >
+                    +
+                </Button>
+                <Typography variant="body1" className="cart-item-button">
+                    Quantity: {cart.quantity}
+                </Typography>
+                <Button
+                    className="cart-item-button"
+                    variant="contained"
+                    onClick={() => decreaseProductQuantity(cart.videoGameInfoId)}
+                >
+                    -
+                </Button>
+                <Button
+                    className="delete-button"
+                    variant="outlined"
+                    onClick={() => removeProduct(cart.videoGameInfoId)}
+                >
+                    Delete
+                </Button>
+            </div>
         </div>
     );
 }

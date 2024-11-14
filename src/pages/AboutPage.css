@@ -1,46 +1,66 @@
-
 .about-page {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+h1,
+h2 {
+    text-align: center;
+    color: #333;
+}
+
+.about-us,
+.mission,
+.collection,
+.story {
+    margin-bottom: 40px;
+}
+
+.about-us p,
+.mission p,
+.collection p,
+.story p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #555;
+    text-align: center;
     max-width: 800px;
     margin: 0 auto;
-    padding: 20px;
-    color: #333;
-    line-height: 1.6;
 }
 
-.about-page h1 {
-    font-size: 32px;
-    text-align: center;
-    color: #2c3e50;
-    margin-bottom: 20px;
-}
-
-.about-page section {
-    padding: 15px;
+.about-us {
+    background-color: #f0f0f0;
+    padding: 40px;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
 }
 
-.about-page .about-us {
-    background-color: #fff3e0;
+.mission,
+.collection,
+.story {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-.about-page .mission {
-    background-color: #f8e1e7;
- 
+h1 {
+    font-size: 2.5rem;
+    color: #0073e6;
 }
 
-.about-page .collection {
-    background-color: #e1f0f8;
-   
+h2 {
+    font-size: 2rem;
+    color: #333;
 }
 
-.about-page .story {
-    background-color: #e8f8e1;
-}
+@media (max-width: 768px) {
 
-.about-page p {
-    font-size: 16px;
-    color: #555;
-    margin-bottom: 15px;
+    .about-us p,
+    .mission p,
+    .collection p,
+    .story p {
+        font-size: 0.9rem;
+        max-width: 100%;
+    }
 }
