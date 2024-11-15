@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import CircularProgress from "@mui/material/CircularProgress";
 import notfound from "./Images/not_found.jpg";
-import AboutPage from "./Pages/Aboutpage.js";
+import AboutPage from "./Pages/AboutPage.js";
 import ProductPage from "./Pages/ProductPage.js";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ProductDetail from "./Pages/ProductDetailPage.js";
@@ -47,13 +47,13 @@ function App() {
     const offset = (page - 1) * limit;
 
     let videoGameInfoUrl = `http://localhost:5125/api/v1/VideoGamesInfo/Detailed?offset=${offset}&limit=${limit}&search=${userInput}`;
-  
+
     if (parseFloat(minPrice) > parseFloat(maxPrice)) {
       return;
     }
     if (minPrice) videoGameInfoUrl += `&minPrice=${minPrice}`;
     if (maxPrice) videoGameInfoUrl += `&maxPrice=${maxPrice}`;
-    
+
     try {
       const response = await axios.get(videoGameInfoUrl);
       setProductList(response.data);
@@ -90,10 +90,10 @@ function App() {
         setIsUserDataLoading(false);
         console.log(err);
       });
-   
+
   }
 
- 
+
 
   function getSystemAdminData() {
     setIsSystemAdminDataLoading(true);
@@ -106,11 +106,11 @@ function App() {
       })
       .then((res) => {
         setSystemAdminData(res.data);
-        setIsAdminAuthenticated(true); 
+        setIsAdminAuthenticated(true);
         setIsSystemAdminDataLoading(false);
       })
       .catch((err) => {
-        setIsAdminAuthenticated(false); 
+        setIsAdminAuthenticated(false);
         setIsSystemAdminDataLoading(false);
         console.log(err);
       });
@@ -193,10 +193,11 @@ function App() {
           ),
         },
         {
-          path: "/Products/:productId", element: <ProductDetail 
+          path: "/Products/:productId", element: <ProductDetail
             products={productList}
-          cartList={cartList}
-            setCartList={setCartList} /> },
+            cartList={cartList}
+            setCartList={setCartList} />
+        },
         { path: "/categories/:categoryName", element: <CategoryDetail /> },
         { path: "/About", element: <AboutPage /> },
         { path: "/WishList", element: <WishListPage wishList={wishList} /> },
@@ -257,7 +258,7 @@ function App() {
               shouldCheckAdmin={true}
               element={
                 <ProductDashBoard
-                 
+
                 />
               }
             />
@@ -265,21 +266,21 @@ function App() {
         },
         {
           path: "/userManagement-Dashboard",
-        element: (
-          <ProtectedRoute
-            isAdminAuthenticated={isAdminAuthenticated}
-            shouldCheckAdmin={true}
-            element={
-              <UserManagementDashboard
+          element: (
+            <ProtectedRoute
+              isAdminAuthenticated={isAdminAuthenticated}
+              shouldCheckAdmin={true}
+              element={
+                <UserManagementDashboard
 
-              />
-            }
-          />
-        ),
+                />
+              }
+            />
+          ),
         },
         {
-          path:"/order-history",
-          element:<UserOrderHistory/>
+          path: "/order-history",
+          element: <UserOrderHistory />
         },
       ],
     },
