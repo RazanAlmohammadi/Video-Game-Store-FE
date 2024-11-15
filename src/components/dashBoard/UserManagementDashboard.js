@@ -21,7 +21,7 @@ export default function UserManagementDashboard() {
 
         try {
             setLoading(true);
-            const response = await axios.get(`https://video-game-store-fe.onrender.com/api/v1/Customer`, {
+            const response = await axios.get(`  http://localhost:5125/api/v1/Customer`, {
                 params: { offset, limit },
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -45,7 +45,7 @@ export default function UserManagementDashboard() {
         const token = localStorage.getItem('token');
 
         try {
-            const response = await axios.delete(`https://video-game-store-fe.onrender.com/api/v1/SystemAdmin/${personId}`, {
+            const response = await axios.delete(`  http://localhost:5125/api/v1/SystemAdmin/${personId}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -63,10 +63,10 @@ export default function UserManagementDashboard() {
 
         try {
             const [storeResponse, paymentResponse] = await Promise.all([
-                axios.get('https://video-game-store-fe.onrender.com/api/v1/Store', {
+                axios.get('  http://localhost:5125/api/v1/Store', {
                     headers: { Authorization: `Bearer ${token}` },
                 }),
-                axios.get('https://video-game-store-fe.onrender.com/api/v1/Payment', {
+                axios.get('  http://localhost:5125/api/v1/Payment', {
                     headers: { Authorization: `Bearer ${token}` },
                 }),
             ]);
@@ -85,7 +85,7 @@ export default function UserManagementDashboard() {
 
         try {
             setLoading(true);
-            const response = await axios.get('https://video-game-store-fe.onrender.com/api/v1/Order/all', {
+            const response = await axios.get('  http://localhost:5125/api/v1/Order/all', {
                 headers: { Authorization: `Bearer ${token}` },
             });
             const fetchedOrders = response.data;
