@@ -6,7 +6,7 @@ This project is a frontend for an e-commerce website, developed using modern web
 
 ### Level 1: Basic Requirements
 
-**Pages to Create:**
+**pages to Create:**
 
 1. Home page
 2. Product page(list all the products)
