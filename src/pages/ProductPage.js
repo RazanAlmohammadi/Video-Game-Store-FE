@@ -25,8 +25,7 @@ export default function ProductPage({
         <PriceRangeForm setMinPrice={setMinPrice} setMaxPrice={setMaxPrice} />
       </Box>
       <Box className="products-section">
-        <Products
-          productList={products}
+        <products productList={products}
           userInput={userInput}
           cartList={cartList}
           setCartList={setCartList}
