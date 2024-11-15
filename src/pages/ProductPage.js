@@ -1,7 +1,7 @@
 import React from 'react';
 import Products from "../components/Products/Products";
 import Form from "../components/Form/Form";
-import PriceRangeForm from "../components/Products/PriceRangeForm";
+import PriceRangeForm from "../components/products/PriceRangeForm";
 import { Container, Box } from '@mui/material';
 import './ProductPage.css';
 
