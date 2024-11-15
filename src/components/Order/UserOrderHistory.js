@@ -29,9 +29,9 @@ export default function UserOrderHistory() {
 
     const fetchGameName = async (videoGameVersionId) => {
         try {
-            const versionResponse = await axios.get(`http://localhost:5125/api/v1/VideoGamesVersion/${videoGameVersionId}`);
+            const versionResponse = await axios.get(`https://video-game-store-fe.onrender.com/api/v1/VideoGamesVersion/${videoGameVersionId}`);
             const videoGameInfoId = versionResponse.data.videoGameInfoId;
-            const gameInfoResponse = await axios.get(`http://localhost:5125/api/v1/VideoGamesInfo/${videoGameInfoId}`);
+            const gameInfoResponse = await axios.get(`https://video-game-store-fe.onrender.com/api/v1/VideoGamesInfo/${videoGameInfoId}`);
             return gameInfoResponse.data.gameName;
         } catch (err) {
             console.error('Error fetching game name:', err);
@@ -43,13 +43,13 @@ export default function UserOrderHistory() {
         const fetchOrderData = async () => {
             try {
                 const token = localStorage.getItem('token');
-                const response = await axios.get('http://localhost:5125/api/v1/Order', {
+                const response = await axios.get('https://video-game-store-fe.onrender.com/api/v1/Order', {
                     headers: { Authorization: `Bearer ${token}` },
                 });
 
                 setOrderList(response.data);
 
-                const paymentResponse = await axios.get('http://localhost:5125/api/v1/Payment');
+                const paymentResponse = await axios.get('https://video-game-store-fe.onrender.com/api/v1/Payment');
                 setPaymentMethods(paymentResponse.data);
 
                 const gameNamesMap = {};

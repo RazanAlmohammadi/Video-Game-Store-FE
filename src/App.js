@@ -46,7 +46,7 @@ function App() {
   const getData = async (page) => {
     const offset = (page - 1) * limit;
 
-    let videoGameInfoUrl = `http://localhost:5125/api/v1/VideoGamesInfo/Detailed?offset=${offset}&limit=${limit}&search=${userInput}`;
+    let videoGameInfoUrl = `https://video-game-store-fe.onrender.com/api/v1/VideoGamesInfo/Detailed?offset=${offset}&limit=${limit}&search=${userInput}`;
 
     if (parseFloat(minPrice) > parseFloat(maxPrice)) {
       return;
@@ -77,7 +77,7 @@ function App() {
     setIsUserDataLoading(true);
     const token = localStorage.getItem("token");
     axios
-      .get("http://localhost:5125/api/v1/Customer/Profile", {
+      .get("https://video-game-store-fe.onrender.com/api/v1/Customer/Profile", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -99,7 +99,7 @@ function App() {
     setIsSystemAdminDataLoading(true);
     const token = localStorage.getItem("token");
     axios
-      .get("http://localhost:5125/api/v1/SystemAdmin/Profile", {
+      .get("https://video-game-store-fe.onrender.com/api/v1/SystemAdmin/Profile", {
         headers: {
           Authorization: `Bearer ${token}`,
         },

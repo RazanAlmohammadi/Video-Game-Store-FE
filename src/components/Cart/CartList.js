@@ -14,10 +14,10 @@ export default function CartList(prop) {
   const navigate = useNavigate();
 
   const token = localStorage.getItem("token");
-  const [authStatus, setAuthStatus] = useState(isAuthenticated || false); 
+  const [authStatus, setAuthStatus] = useState(isAuthenticated || false);
 
   useEffect(() => {
-    
+
     if (token && token !== '') {
       setAuthStatus(true);
     }
@@ -25,22 +25,22 @@ export default function CartList(prop) {
     // Fetch payment methods and stores
     const fetchData = async () => {
       try {
-        const paymentMethodsResponse = await axios.get('http://localhost:5125/api/v1/Payment');
+        const paymentMethodsResponse = await axios.get('https://video-game-store-fe.onrender.com/api/v1/Payment');
         setPaymentMethods(paymentMethodsResponse.data);
 
-        const storeNamesResponse = await axios.get('http://localhost:5125/api/v1/Store');
+        const storeNamesResponse = await axios.get('https://video-game-store-fe.onrender.com/api/v1/Store');
         setStoreNames(storeNamesResponse.data);
       } catch (error) {
         console.error('Error fetching payment methods or store names:', error);
       }
     };
     fetchData();
-  }, [token]); 
+  }, [token]);
 
   const totalPrice = cartList.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
   const orderedGames = cartList.map((item) => ({
-    videoGameVersionID: item.videoGameVersions[0]?.videoGameVersionId, 
+    videoGameVersionID: item.videoGameVersions[0]?.videoGameVersionId,
     quantity: item.quantity,
   }));
 
@@ -60,7 +60,7 @@ export default function CartList(prop) {
 
     try {
       const response = await axios.post(
-        "http://localhost:5125/api/v1/Order",
+        "https://video-game-store-fe.onrender.com/api/v1/Order",
         orderPayload,
         {
           headers: {
@@ -122,8 +122,8 @@ export default function CartList(prop) {
 
       <Button className="checkout-button" onClick={checkOut}>Checkout</Button>
 
-     
+
     </div>
-    
+
   );
 }

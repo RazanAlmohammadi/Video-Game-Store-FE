@@ -17,7 +17,7 @@ export default function ProductDetail({ cartList, setCartList }) {
     const [productDetail, setProductDetail] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const url = `http://localhost:5125/api/v1/VideoGamesInfo/${productId}`;
+    const url = `https://video-game-store-fe.onrender.com/api/v1/VideoGamesInfo/${productId}`;
 
     useEffect(() => {
         fetchProductDetail();
@@ -74,7 +74,7 @@ export default function ProductDetail({ cartList, setCartList }) {
     return (
         <Box className="product-detail">
             <Paper elevation={4} className="product-detail-container">
-             
+
                 <Button
                     onClick={handleBack}
                     variant="contained"

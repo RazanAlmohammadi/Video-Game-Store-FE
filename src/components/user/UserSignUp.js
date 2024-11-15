@@ -14,7 +14,7 @@ export default function UserSignUp() {
   }
 
   function SignUpNewUser() {
-    const UserSignUpUrl = "http://localhost:5125/api/v1/Customer";
+    const UserSignUpUrl = "https://video-game-store-fe.onrender.com/api/v1/Customer";
     axios.post(UserSignUpUrl, userInfo)
       .then((response) => {
         if (response.status === 200) {
@@ -46,7 +46,7 @@ export default function UserSignUp() {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        height: '100vh', 
+        height: '100vh',
         backgroundColor: '#f4f4f9'
       }}
     >

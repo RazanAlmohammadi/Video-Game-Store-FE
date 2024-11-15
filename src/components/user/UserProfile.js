@@ -25,7 +25,7 @@ export default function UserProfile({ userData, setUserData }) {
   }
 
   function updateAge() {
-    axios.put(`http://localhost:5125/api/v1/customer/updateAge?age=${newAge}`, {},
+    axios.put(`https://video-game-store-fe.onrender.com/api/v1/customer/updateAge?age=${newAge}`, {},
       { headers: { Authorization: `Bearer ${token}` } })
       .then(() => {
         setUserData((prevData) => ({ ...prevData, age: newAge }));
@@ -35,7 +35,7 @@ export default function UserProfile({ userData, setUserData }) {
   }
 
   function updatePassword() {
-    axios.put(`http://localhost:5125/api/v1/person/updatePassword`,
+    axios.put(`https://video-game-store-fe.onrender.com/api/v1/person/updatePassword`,
       { oldPassword, newPassword },
       { headers: { Authorization: `Bearer ${token}` } })
       .then(() => {
@@ -46,7 +46,7 @@ export default function UserProfile({ userData, setUserData }) {
   }
 
   function updateName() {
-    axios.put(`http://localhost:5125/api/v1/person/updateName?name=${newName}`, {},
+    axios.put(`https://video-game-store-fe.onrender.com/api/v1/person/updateName?name=${newName}`, {},
       { headers: { Authorization: `Bearer ${token}` } })
       .then(() => {
         setUserData((prevData) => ({ ...prevData, personName: newName }));
@@ -56,7 +56,7 @@ export default function UserProfile({ userData, setUserData }) {
   }
 
   function updatePhoneNumber() {
-    axios.put(`http://localhost:5125/api/v1/person/updatePhone?newPhone=${newPhoneNumber}`, {},
+    axios.put(`https://video-game-store-fe.onrender.com/api/v1/person/updatePhone?newPhone=${newPhoneNumber}`, {},
       { headers: { Authorization: `Bearer ${token}` } })
       .then(() => {
         setUserData((prevData) => ({ ...prevData, personPhoneNumber: newPhoneNumber }));
@@ -66,7 +66,7 @@ export default function UserProfile({ userData, setUserData }) {
   }
 
   function updateProfilePicture() {
-    axios.put(`http://localhost:5125/api/v1/person/updateProfilePicture?picturePath=${newProfilePicture}`, {},
+    axios.put(`https://video-game-store-fe.onrender.com/api/v1/person/updateProfilePicture?picturePath=${newProfilePicture}`, {},
       { headers: { Authorization: `Bearer ${token}` } })
       .then(() => {
         setUserData((prevData) => ({ ...prevData, personProfilePicture: newProfilePicture }));
@@ -85,7 +85,7 @@ export default function UserProfile({ userData, setUserData }) {
     <div className="profile-container">
       <h1 className="profile-header">User Profile</h1>
       <div className="profile-info-container">
-       
+
         <div className="profile-picture-container">
           <img
             src={userData.personProfilePicture || "https://via.placeholder.com/150"}

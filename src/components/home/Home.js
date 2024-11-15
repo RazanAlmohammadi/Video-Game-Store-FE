@@ -15,7 +15,7 @@ export default function Home() {
     useEffect(() => {
         const fetchCategories = async () => {
             try {
-                const response = await axios.get('http://localhost:5125/api/v1/Categories');
+                const response = await axios.get('https://video-game-store-fe.onrender.com/api/v1/Categories');
                 setCategories(response.data);
                 setTotalPages(Math.ceil(response.data.length / 2));
             } catch (error) {
@@ -39,7 +39,7 @@ export default function Home() {
     useEffect(() => {
         const fetchGames = async () => {
             try {
-                const response = await axios.get('http://localhost:5125/api/v1/VideoGamesInfo');
+                const response = await axios.get('https://video-game-store-fe.onrender.com/api/v1/VideoGamesInfo');
                 const games = response.data.videoGamesInfos;
 
                 console.log("Fetched games:", games);

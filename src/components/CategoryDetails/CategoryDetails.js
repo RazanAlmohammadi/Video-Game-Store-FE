@@ -2,17 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import './CategoryDetail.css'; 
+import './CategoryDetail.css';
 
 export default function CategoryDetail() {
-    const { categoryName } = useParams(); 
+    const { categoryName } = useParams();
     const [categoryDetails, setCategoryDetails] = useState(null);
 
     useEffect(() => {
         const fetchCategoryDetails = async () => {
             try {
-                const response = await axios.get(`http://localhost:5125/api/v1/Categories/${categoryName}`);
-                const categoryData = response.data[0]; 
+                const response = await axios.get(`https://video-game-store-fe.onrender.com/api/v1/Categories/${categoryName}`);
+                const categoryData = response.data[0];
                 setCategoryDetails(categoryData);
             } catch (error) {
                 console.error('Error fetching category details:', error);
