@@ -10,7 +10,7 @@ import HomePage from "./pages/HomePage.js";
 import WishListPage from "./pages/WishListPage.js";
 import CartPage from "./pages/CartPage.js";
 import NotFoundPage from "./pages/NotFoundPage.js";
-import ProductsPagination from "./components/Products/ProductsPagination.js";
+import ProductsPagination from "./components/products/ProductsPagination.js";
 import Layout from "./Laytout/Layout.js";
 import UserSignUpPage from "./pages/UserSignUpPage.js"
 import UserLoginPage from "./pages/UserLoginPage.js";
