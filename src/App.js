@@ -16,7 +16,7 @@ import UserSignUpPage from "./pages/UserSignUpPage.js"
 import UserLoginPage from "./pages/UserLoginPage.js";
 import UserProfilePage from "./pages/UserProfilePage.js";
 import ProtectedRoute from "./components/user/ProtectedRoute.js"
-import CategoryDetail from "./Pages/CategoryDetailPage.js";
+import CategoryDetail from "./pages/CategoryDetailPage.js";
 import DashBoard from "./components/dashBoard/DashBoard";
 import SystemAdminProfile from "./components/user/SystemAdminProfile.js";
 import ProductDashBoard from "./components/dashBoard/ProductDashBoard.js";
