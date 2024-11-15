@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import CircularProgress from "@mui/material/CircularProgress";
 import notfound from "./Images/not_found.jpg";
-import AboutPage from "./Pages/AboutPage.js";
+import AboutPage from './Pages/AboutPage.js';
 import ProductPage from "./Pages/ProductPage.js";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ProductDetail from "./Pages/ProductDetailPage.js";
