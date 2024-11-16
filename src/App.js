@@ -77,8 +77,7 @@ function App() {
     setIsUserDataLoading(true);
     const token = localStorage.getItem("token");
     axios
-      .get("  https://sda-3-online-backend-teamwork-ec29.onrender.com
-  /api/v1/Customer/Profile", {
+      .get("https://sda-3-online-backend-teamwork-ec29.onrender.com/api/v1/Customer/Profile", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -100,8 +99,7 @@ function App() {
     setIsSystemAdminDataLoading(true);
     const token = localStorage.getItem("token");
     axios
-      .get("  https://sda-3-online-backend-teamwork-ec29.onrender.com
-  /api/v1/SystemAdmin/Profile", {
+      .get("https://sda-3-online-backend-teamwork-ec29.onrender.com/api/v1/SystemAdmin/Profile", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
