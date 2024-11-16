@@ -11,7 +11,7 @@ export default function CategoryDetail() {
     useEffect(() => {
         const fetchCategoryDetails = async () => {
             try {
-                const response = await axios.get(`  http://localhost:5125/api/v1/Categories/${categoryName}`);
+                const response = await axios.get(`  https://sda-3-online-backend-teamwork-ec29.onrender.com/api/v1/Categories/${categoryName}`);
                 const categoryData = response.data[0];
                 setCategoryDetails(categoryData);
             } catch (error) {

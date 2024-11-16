@@ -42,7 +42,7 @@ export default function ProductDashBoard() {
     // Fetch all products
     const fetchAllData = async () => {
         try {
-            const response = await axios.get('  http://localhost:5125/api/v1/VideoGamesInfo/Detailed?Limit=100');
+            const response = await axios.get('  https://sda-3-online-backend-teamwork-ec29.onrender.com/api/v1/VideoGamesInfo/Detailed?Limit=100');
             console.log('Fetched products:', response.data.videoGamesInfos);
             setProductList(response.data.videoGamesInfos);
         } catch (error) {
@@ -56,7 +56,7 @@ export default function ProductDashBoard() {
     // Fetch categories, consoles, studios, and publishers
     const fetchCategories = async () => {
         try {
-            const response = await axios.get('  http://localhost:5125/api/v1/categories');
+            const response = await axios.get('  https://sda-3-online-backend-teamwork-ec29.onrender.com/api/v1/categories');
             setCategoryList(response.data);
         } catch (error) {
             console.error("Error fetching categories:", error);
@@ -65,7 +65,7 @@ export default function ProductDashBoard() {
 
     const fetchConsoles = async () => {
         try {
-            const response = await axios.get('  http://localhost:5125/api/v1/Console');
+            const response = await axios.get('  https://sda-3-online-backend-teamwork-ec29.onrender.com/api/v1/Console');
             setConsoleList(response.data);
         } catch (error) {
             console.error("Error fetching consoles:", error);
@@ -74,7 +74,7 @@ export default function ProductDashBoard() {
 
     const fetchStudios = async () => {
         try {
-            const response = await axios.get('  http://localhost:5125/api/v1/GameStudio');
+            const response = await axios.get('  https://sda-3-online-backend-teamwork-ec29.onrender.com/api/v1/GameStudio');
             setStudioList(response.data);
             console.log('Fetched studios:', response.data);
         } catch (error) {
@@ -84,7 +84,7 @@ export default function ProductDashBoard() {
 
     const fetchPublishers = async () => {
         try {
-            const response = await axios.get('  http://localhost:5125/api/v1/Publisher');
+            const response = await axios.get('  https://sda-3-online-backend-teamwork-ec29.onrender.com/api/v1/Publisher');
             setPublisherList(response.data);
         } catch (error) {
             console.error("Error fetching publishers:", error);
@@ -106,7 +106,7 @@ export default function ProductDashBoard() {
     const deleteProduct = async (id) => {
         try {
             const token = localStorage.getItem('token');
-            const url = `  http://localhost:5125/api/v1/VideoGamesInfo/${id}`;
+            const url = `  https://sda-3-online-backend-teamwork-ec29.onrender.com/api/v1/VideoGamesInfo/${id}`;
             const response = await axios.delete(url, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -180,7 +180,7 @@ export default function ProductDashBoard() {
 
         try {
             const token = localStorage.getItem('token');
-            const url = '  http://localhost:5125/api/v1/VideoGamesInfo';
+            const url = '  https://sda-3-online-backend-teamwork-ec29.onrender.com/api/v1/VideoGamesInfo';
             const response = await axios.post(url, videoGameInfoCreate, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -202,7 +202,7 @@ export default function ProductDashBoard() {
             const newGameName = editFields[id]?.gameName;
             if (newGameName) {
                 await axios.put(
-                    `  http://localhost:5125/api/v1/VideoGamesInfo/${id}`,
+                    `  https://sda-3-online-backend-teamwork-ec29.onrender.com/api/v1/VideoGamesInfo/${id}`,
                     null,
                     {
                         headers: { Authorization: `Bearer ${token}` },
@@ -222,7 +222,7 @@ export default function ProductDashBoard() {
             const newYearOfRelease = editFields[id]?.yearOfRelease;
             if (newYearOfRelease) {
                 await axios.put(
-                    `  http://localhost:5125/api/v1/VideoGamesInfo/${id}/year`,
+                    `  https://sda-3-online-backend-teamwork-ec29.onrender.com/api/v1/VideoGamesInfo/${id}/year`,
                     null,
                     {
                         headers: { Authorization: `Bearer ${token}` },

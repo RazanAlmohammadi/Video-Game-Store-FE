@@ -25,7 +25,7 @@ export default function UserProfile({ userData, setUserData }) {
   }
 
   function updateAge() {
-    axios.put(`  http://localhost:5125/api/v1/customer/updateAge?age=${newAge}`, {},
+    axios.put(`  https://sda-3-online-backend-teamwork-ec29.onrender.com/api/v1/customer/updateAge?age=${newAge}`, {},
       { headers: { Authorization: `Bearer ${token}` } })
       .then(() => {
         setUserData((prevData) => ({ ...prevData, age: newAge }));
@@ -35,7 +35,7 @@ export default function UserProfile({ userData, setUserData }) {
   }
 
   function updatePassword() {
-    axios.put(`  http://localhost:5125/api/v1/person/updatePassword`,
+    axios.put(`  https://sda-3-online-backend-teamwork-ec29.onrender.com/api/v1/person/updatePassword`,
       { oldPassword, newPassword },
       { headers: { Authorization: `Bearer ${token}` } })
       .then(() => {
@@ -46,7 +46,7 @@ export default function UserProfile({ userData, setUserData }) {
   }
 
   function updateName() {
-    axios.put(`  http://localhost:5125/api/v1/person/updateName?name=${newName}`, {},
+    axios.put(`  https://sda-3-online-backend-teamwork-ec29.onrender.com/api/v1/person/updateName?name=${newName}`, {},
       { headers: { Authorization: `Bearer ${token}` } })
       .then(() => {
         setUserData((prevData) => ({ ...prevData, personName: newName }));
@@ -56,7 +56,7 @@ export default function UserProfile({ userData, setUserData }) {
   }
 
   function updatePhoneNumber() {
-    axios.put(`  http://localhost:5125/api/v1/person/updatePhone?newPhone=${newPhoneNumber}`, {},
+    axios.put(`  https://sda-3-online-backend-teamwork-ec29.onrender.com/api/v1/person/updatePhone?newPhone=${newPhoneNumber}`, {},
       { headers: { Authorization: `Bearer ${token}` } })
       .then(() => {
         setUserData((prevData) => ({ ...prevData, personPhoneNumber: newPhoneNumber }));
@@ -66,7 +66,7 @@ export default function UserProfile({ userData, setUserData }) {
   }
 
   function updateProfilePicture() {
-    axios.put(`  http://localhost:5125/api/v1/person/updateProfilePicture?picturePath=${newProfilePicture}`, {},
+    axios.put(`  https://sda-3-online-backend-teamwork-ec29.onrender.com/api/v1/person/updateProfilePicture?picturePath=${newProfilePicture}`, {},
       { headers: { Authorization: `Bearer ${token}` } })
       .then(() => {
         setUserData((prevData) => ({ ...prevData, personProfilePicture: newProfilePicture }));

@@ -17,7 +17,7 @@ export default function ProductDetail({ cartList, setCartList }) {
     const [productDetail, setProductDetail] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const url = `  http://localhost:5125/api/v1/VideoGamesInfo/${productId}`;
+    const url = `  https://sda-3-online-backend-teamwork-ec29.onrender.com/api/v1/VideoGamesInfo/${productId}`;
 
     useEffect(() => {
         fetchProductDetail();

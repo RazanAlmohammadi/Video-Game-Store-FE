@@ -14,7 +14,7 @@ export default function UserSignUp() {
   }
 
   function SignUpNewUser() {
-    const UserSignUpUrl = "  http://localhost:5125/api/v1/Customer";
+    const UserSignUpUrl = "  https://sda-3-online-backend-teamwork-ec29.onrender.com/api/v1/Customer";
     axios.post(UserSignUpUrl, userInfo)
       .then((response) => {
         if (response.status === 200) {

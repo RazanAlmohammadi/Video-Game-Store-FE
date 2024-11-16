@@ -39,14 +39,14 @@ function App() {
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false);
   const [cartList, setCartList] = useState([]);
   const [wishList, setWishList] = useState([]);
-  http://localhost:5125
+ 
 
   const limit = 6;
 
   const getData = async (page) => {
     const offset = (page - 1) * limit;
 
-    let videoGameInfoUrl = `  http://localhost:5125/api/v1/VideoGamesInfo/Detailed?offset=${offset}&limit=${limit}&search=${userInput}`;
+    let videoGameInfoUrl = `  https://sda-3-online-backend-teamwork-ec29.onrender.com/api/v1/VideoGamesInfo/Detailed?offset=${offset}&limit=${limit}&search=${userInput}`;
 
     if (parseFloat(minPrice) > parseFloat(maxPrice)) {
       return;
@@ -77,7 +77,8 @@ function App() {
     setIsUserDataLoading(true);
     const token = localStorage.getItem("token");
     axios
-      .get("  http://localhost:5125/api/v1/Customer/Profile", {
+      .get("  https://sda-3-online-backend-teamwork-ec29.onrender.com
+  /api/v1/Customer/Profile", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -99,7 +100,8 @@ function App() {
     setIsSystemAdminDataLoading(true);
     const token = localStorage.getItem("token");
     axios
-      .get("  http://localhost:5125/api/v1/SystemAdmin/Profile", {
+      .get("  https://sda-3-online-backend-teamwork-ec29.onrender.com
+  /api/v1/SystemAdmin/Profile", {
         headers: {
           Authorization: `Bearer ${token}`,
         },

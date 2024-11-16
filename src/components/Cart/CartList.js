@@ -25,10 +25,10 @@ export default function CartList(prop) {
     // Fetch payment methods and stores
     const fetchData = async () => {
       try {
-        const paymentMethodsResponse = await axios.get('  http://localhost:5125/api/v1/Payment');
+        const paymentMethodsResponse = await axios.get('  https://sda-3-online-backend-teamwork-ec29.onrender.com/api/v1/Payment');
         setPaymentMethods(paymentMethodsResponse.data);
 
-        const storeNamesResponse = await axios.get('  http://localhost:5125/api/v1/Store');
+        const storeNamesResponse = await axios.get('  https://sda-3-online-backend-teamwork-ec29.onrender.com/api/v1/Store');
         setStoreNames(storeNamesResponse.data);
       } catch (error) {
         console.error('Error fetching payment methods or store names:', error);
@@ -60,7 +60,7 @@ export default function CartList(prop) {
 
     try {
       const response = await axios.post(
-        "  http://localhost:5125/api/v1/Order",
+        "  https://sda-3-online-backend-teamwork-ec29.onrender.com/api/v1/Order",
         orderPayload,
         {
           headers: {
