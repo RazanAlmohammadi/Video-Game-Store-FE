@@ -17,11 +17,11 @@ import UserLoginPage from "./pages/UserLoginPage.js";
 import UserProfilePage from "./pages/UserProfilePage.js";
 import ProtectedRoute from "./components/user/ProtectedRoute.js"
 import CategoryDetail from "./pages/CategoryDetailPage.js";
-import DashBoard from "./components/dashBoard/DashBoard";
 import SystemAdminProfile from "./components/user/SystemAdminProfile.js";
 import ProductDashBoard from "./components/dashBoard/ProductDashBoard.js";
 import UserManagementDashboard from "./components/dashBoard/UserManagementDashboard.js";
 import UserOrderHistory from "./components/Order/UserOrderHistory.js";
+import AdminDashboard from "./components/dashBoard/AdminDashboard.js";
 
 function App() {
   const [productList, setProductList] = useState([]);
@@ -246,7 +246,7 @@ function App() {
               isAuthenticated={isAuthenticated}
               shouldCheckAdmin={true}
               isAdminAuthenticated={isAdminAuthenticated}
-              element={<DashBoard />}
+              element={<AdminDashboard />}
             />
           ),
         },

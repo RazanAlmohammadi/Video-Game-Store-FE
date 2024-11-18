@@ -1,0 +1,15 @@
+.tab-item {
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.selected-tab {
+    color: #1976d2;
+}
+
+.content-container {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+}
