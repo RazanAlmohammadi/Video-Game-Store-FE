@@ -22,6 +22,8 @@ import ProductDashBoard from "./components/dashBoard/ProductDashBoard.js";
 import UserManagementDashboard from "./components/dashBoard/UserManagementDashboard.js";
 import UserOrderHistory from "./components/Order/UserOrderHistory.js";
 import AdminDashboard from "./components/dashBoard/AdminDashboard.js";
+import './App.css';
+
 
 function App() {
   const [productList, setProductList] = useState([]);

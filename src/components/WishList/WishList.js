@@ -20,8 +20,10 @@ export default function WishList({ wishList }) {
     emptyMessage: {
       textAlign: 'center',
       fontSize: '1.2em',
-      color: '#777',
-      marginTop: '20px',
+      marginTop: '200px',
+      marginBottom: '200px',
+     
+
     },
   };
 

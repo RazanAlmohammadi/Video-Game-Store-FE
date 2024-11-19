@@ -29,7 +29,7 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: linear-gradient(135deg, #a6cf92, #f0f0f0);
+    background: linear-gradient(135deg, #FCC7FE, #f0f0f0);
     text-align: center;
     animation: fadeIn 1s ease-in-out;
 }

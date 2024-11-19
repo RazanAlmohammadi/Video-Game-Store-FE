@@ -89,7 +89,7 @@ export default function UserLogin({ getUserData, getSystemAdminData }) {
         justifyContent: 'center',
         alignItems: 'center',
         height: '100vh',
-        backgroundColor: '#f4f4f9'
+       
       }}
     >
       <Container component="main" maxWidth="xs">

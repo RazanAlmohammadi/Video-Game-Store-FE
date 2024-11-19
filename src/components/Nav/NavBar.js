@@ -24,16 +24,16 @@ export default function NavBar({ isAuthenticated, isAdminAuthenticated }) {
       <img src={logo} alt="logo" className="logo" />
       <div className="navList-container">
         <ul className="navList">
-          <li><Link to="/Home" className={getLinkClass("/Home")}><HomeIcon sx={{ color: "black" }} /></Link></li>
-          <li><Link to="/Products" className={getLinkClass("/Products")}><SportsEsportsIcon sx={{ color: "black" }} /></Link></li>
-          <li><Link to="/wishList" className={getLinkClass("/wishList")}><FavoriteIcon sx={{ color: "black" }} /></Link></li>
-          <li><Link to="/Cart" className={getLinkClass("/Cart")}><ShoppingBasketIcon sx={{ color: "black" }} /></Link></li>
-          <li><Link to="/About" className={getLinkClass("/About")}><InfoIcon sx={{ color: "black" }} /></Link></li>
+          <li><Link to="/Home" className={getLinkClass("/Home")}><HomeIcon sx={{ color: "white" }} /></Link></li>
+          <li><Link to="/Products" className={getLinkClass("/Products")}><SportsEsportsIcon sx={{ color: "white" }} /></Link></li>
+          <li><Link to="/wishList" className={getLinkClass("/wishList")}><FavoriteIcon sx={{ color: "white" }} /></Link></li>
+          <li><Link to="/Cart" className={getLinkClass("/Cart")}><ShoppingBasketIcon sx={{ color: "white" }} /></Link></li>
+          <li><Link to="/About" className={getLinkClass("/About")}><InfoIcon sx={{ color: "white" }} /></Link></li>
           {isAuthenticated && !isAdminAuthenticated && (
-            <li><Link to="/order-history"><LineAxisIcon sx={{ color: "black" }} /> </Link></li>
+            <li><Link to="/order-history"><LineAxisIcon sx={{ color: "white" }} /> </Link></li>
           )}
           {isAdminAuthenticated && (
-            <li><Link to="/Dashboard"><LineAxisIcon sx={{ color: "black" }} /> </Link></li>
+            <li><Link to="/Dashboard"><LineAxisIcon sx={{ color: "white" }} /> </Link></li>
           )}
         </ul>
       </div>

@@ -6,7 +6,13 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 export default function UserSignUp() {
-  const [userInfo, setUserInfo] = useState({ PersonName: "", PersonEmail: "", PersonPassword: "" });
+  const [userInfo, setUserInfo] = useState({
+    PersonName: "",
+    PersonEmail: "",
+    PersonPassword: "",
+    age: "",
+    PersonPhoneNumber: "",
+  });
   const navigate = useNavigate();
 
   function onChangeHandler(event) {
@@ -14,7 +20,7 @@ export default function UserSignUp() {
   }
 
   function SignUpNewUser() {
-    const UserSignUpUrl = "  https://sda-3-online-backend-teamwork-ec29.onrender.com/api/v1/Customer";
+    const UserSignUpUrl = "https://sda-3-online-backend-teamwork-ec29.onrender.com/api/v1/Customer";
     axios.post(UserSignUpUrl, userInfo)
       .then((response) => {
         if (response.status === 200) {
@@ -36,6 +42,14 @@ export default function UserSignUp() {
             alert(errorData.PersonName[0]);
             return;
           }
+          if (errorData.age) {
+            alert(errorData.age[0]);
+            return;
+          }
+          if (errorData.PersonPhoneNumber) {
+            alert(errorData.PersonPhoneNumber[0]);
+            return;
+          }
         }
       });
   }
@@ -47,21 +61,19 @@ export default function UserSignUp() {
         justifyContent: 'center',
         alignItems: 'center',
         height: '100vh',
-        backgroundColor: '#f4f4f9'
       }}
     >
-      <Container component="main" maxWidth="xs">
-        <Paper elevation={3} sx={{ padding: 3, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <Typography variant="h4" gutterBottom>
-            User SignUp
+      <Container component="main" maxWidth="sm">
+        <Paper elevation={3} sx={{ padding: 2, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <Typography variant="h5" gutterBottom>
+            Sign Up
           </Typography>
           <TextField
             id="PersonName"
             label="Name"
             variant="outlined"
             fullWidth
-            margin="normal"
-            helperText="Please enter your name"
+            margin="dense"
             onChange={onChangeHandler}
           />
           <TextField
@@ -69,8 +81,7 @@ export default function UserSignUp() {
             label="Email"
             variant="outlined"
             fullWidth
-            margin="normal"
-            helperText="Please enter your email"
+            margin="dense"
             onChange={onChangeHandler}
           />
           <TextField
@@ -78,10 +89,25 @@ export default function UserSignUp() {
             label="Password"
             variant="outlined"
             fullWidth
-            margin="normal"
-            helperText="Please enter your password"
+            margin="dense"
             onChange={onChangeHandler}
             type="password"
+          />
+          <TextField
+            id="age"
+            label="Age"
+            variant="outlined"
+            fullWidth
+            margin="dense"
+            onChange={onChangeHandler}
+          />
+          <TextField
+            id="PersonPhoneNumber"
+            label="Phone Number"
+            variant="outlined"
+            fullWidth
+            margin="dense"
+            onChange={onChangeHandler}
           />
           <Box sx={{ width: '100%', mt: 2 }}>
             <Button

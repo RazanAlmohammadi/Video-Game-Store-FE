@@ -3,14 +3,14 @@
     display: flex;
     align-items: center;
     padding: 15px;
-    border: 1px solid #ccc;
+    border: 1px solid #FCC7FE;
     margin-bottom: 10px;
     cursor: pointer;
     transition: background-color 0.3s;
 }
 
 .wishList-item:hover {
-    background-color: #f0f0f0;
+    background-color: #68A6FF;
 }
 
 .wishList-item img {
@@ -29,6 +29,7 @@
     font-size: 16px;
     font-weight: bold;
     margin: 0;
+    color: #555;
 }
 
 .wishList-item-price {

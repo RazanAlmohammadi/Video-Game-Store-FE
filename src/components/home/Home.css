@@ -1,6 +1,5 @@
 .home-container {
     font-family: 'Arial', sans-serif;
-    background-color: #f9f9f9;
     overflow-x: hidden;
 }
 
@@ -62,7 +61,8 @@
 
 .promo-banner-section {
     position: relative;
-    background-color: #a6cf92;
+    margin-top: 40px;
+    background-color: #68A6FF;
     color: white;
     padding: 20px 0;
     text-align: center;
@@ -101,12 +101,15 @@
 .categories-section {
     padding: 40px 20px;
     text-align: center;
+    background-color: #282C32;
+    margin-bottom: 40px;
 }
 
 .categories-section h2 {
     font-size: 2rem;
     font-weight: bold;
     margin-bottom: 20px;
+    color:white;
 }
 
 .categories-list {
@@ -117,7 +120,7 @@
 }
 
 .category-item {
-    background-color: #fff;
+    background-color: #FCC7FE;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -148,8 +151,9 @@
 
 .trending-games-section {
     padding: 40px 20px;
-    background-color: #f1f1f1;
+    background-color: #68A6FF;
     text-align: center;
+    margin-bottom: 100px;
 }
 
 .trending-games-section h2 {
