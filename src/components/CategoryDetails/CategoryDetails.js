@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';  
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import './CategoryDetail.css';
+import Button from "@mui/material/Button";
+
 
 export default function CategoryDetail() {
     const { categoryName } = useParams();
     const [categoryDetails, setCategoryDetails] = useState(null);
+    const navigate = useNavigate(); 
 
     useEffect(() => {
         const fetchCategoryDetails = async () => {
             try {
-                const response = await axios.get(`  https://sda-3-online-backend-teamwork-ec29.onrender.com/api/v1/Categories/${categoryName}`);
+                const response = await axios.get(`https://sda-3-online-backend-teamwork-ec29.onrender.com/api/v1/Categories/${categoryName}`);
                 const categoryData = response.data[0];
                 setCategoryDetails(categoryData);
             } catch (error) {
@@ -22,8 +25,20 @@ export default function CategoryDetail() {
         fetchCategoryDetails();
     }, [categoryName]);
 
+    const handleBackClick = () => {
+        navigate(-1);  
+    };
+
     return (
         <div className="category-detail-container">
+            <Button
+                onClick={handleBackClick}
+                variant="contained"
+                style={{ position: 'absolute', left: 10, Buttom:30, backgroundColor: '#a6cf92', color: '#FFFFFF' }}
+            >
+                &#8592; Back
+            </Button>
+
             {categoryDetails ? (
                 <div>
                     <h2>{categoryDetails.categoryName} Games</h2>

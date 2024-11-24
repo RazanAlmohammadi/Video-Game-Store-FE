@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Typography, Box } from "@mui/material";
-import './CartItem.css'; 
+import './CartItem.css';  // Import the CSS file
 
 export default function CartItem(prop) {
     const { cart, cartList, setCartList } = prop;
@@ -34,6 +34,10 @@ export default function CartItem(prop) {
 
     return (
         <div className="cart-item-container">
+            <div className="cart-item-image">
+                <img src={cart.gamePicturePath} alt={cart.gameName} className="cart-item-image" />
+            </div>
+
             <div className="cart-item-details">
                 <Typography variant="h6" className="cart-item-name">{cart.gameName}</Typography>
                 <Typography variant="body1" className="cart-item-price">Price: ${cart.videoGameVersions[0].price}</Typography>
@@ -42,7 +46,7 @@ export default function CartItem(prop) {
             <div className="cart-item-actions">
                 <Button
                     className="cart-item-button"
-                    variant="contained"
+                    variant="contained" style={{ backgroundColor: '#a6cf92', color: '#FFFFFF' }}
                     onClick={() => increaseProductQuantity(cart.videoGameInfoId)}
                 >
                     +
@@ -52,7 +56,7 @@ export default function CartItem(prop) {
                 </Typography>
                 <Button
                     className="cart-item-button"
-                    variant="contained"
+                    variant="contained" style={{ backgroundColor: '#a6cf92', color: '#FFFFFF' }}
                     onClick={() => decreaseProductQuantity(cart.videoGameInfoId)}
                 >
                     -

@@ -76,6 +76,7 @@ export default function CartList(prop) {
       }
     } catch (error) {
       console.error("Error creating order:", error.response?.data || error.message);
+      alert("It looks like you're trying to buy games from different stores. Please ensure all items are from the same store before checking out.");
     }
   };
 
@@ -120,7 +121,9 @@ export default function CartList(prop) {
         </Select>
       </FormControl>
 
-      <Button className="checkout-button" onClick={checkOut}>Checkout</Button>
+      <Button className="checkout-button"
+        variant="contained" style={{ backgroundColor: '#a6cf92', color: '#FFFFFF' }}
+         onClick={checkOut}>  Checkout  </Button>
 
 
     </div>

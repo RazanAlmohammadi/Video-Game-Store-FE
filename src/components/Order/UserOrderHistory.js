@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Card, CardContent, CardActions, Collapse, IconButton, CircularProgress } from '@mui/material';
+import { Button, Card, CardContent, CardActions, Collapse, IconButton, CircularProgress } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { styled } from '@mui/material/styles';
+import { Link} from "react-router-dom";
 
 const ExpandMore = styled((props) => {
     const { expand, ...other } = props;
@@ -29,9 +30,9 @@ export default function UserOrderHistory() {
 
     const fetchGameName = async (videoGameVersionId) => {
         try {
-            const versionResponse = await axios.get(`  https://sda-3-online-backend-teamwork-ec29.onrender.com/api/v1/VideoGamesVersion/${videoGameVersionId}`);
+            const versionResponse = await axios.get(`https://sda-3-online-backend-teamwork-ec29.onrender.com/api/v1/VideoGamesVersion/${videoGameVersionId}`);
             const videoGameInfoId = versionResponse.data.videoGameInfoId;
-            const gameInfoResponse = await axios.get(`  https://sda-3-online-backend-teamwork-ec29.onrender.com/api/v1/VideoGamesInfo/${videoGameInfoId}`);
+            const gameInfoResponse = await axios.get(`https://sda-3-online-backend-teamwork-ec29.onrender.com/api/v1/VideoGamesInfo/${videoGameInfoId}`);
             return gameInfoResponse.data.gameName;
         } catch (err) {
             console.error('Error fetching game name:', err);
@@ -43,13 +44,13 @@ export default function UserOrderHistory() {
         const fetchOrderData = async () => {
             try {
                 const token = localStorage.getItem('token');
-                const response = await axios.get('  https://sda-3-online-backend-teamwork-ec29.onrender.com/api/v1/Order', {
+                const response = await axios.get('https://sda-3-online-backend-teamwork-ec29.onrender.com/api/v1/Order', {
                     headers: { Authorization: `Bearer ${token}` },
                 });
 
                 setOrderList(response.data);
 
-                const paymentResponse = await axios.get('  https://sda-3-online-backend-teamwork-ec29.onrender.com/api/v1/Payment');
+                const paymentResponse = await axios.get('https://sda-3-online-backend-teamwork-ec29.onrender.com/api/v1/Payment');
                 setPaymentMethods(paymentResponse.data);
 
                 const gameNamesMap = {};
@@ -64,7 +65,7 @@ export default function UserOrderHistory() {
                 setGameNames(gameNamesMap);
                 setLoading(false);
             } catch (err) {
-                setError('Error fetching order history');
+               
                 setLoading(false);
             }
         };
@@ -79,7 +80,19 @@ export default function UserOrderHistory() {
 
     if (loading) return <div style={{ textAlign: 'center', padding: '20px' }}><CircularProgress /></div>;
     if (error) return <div>Error: {error}</div>;
-    if (orderList.length === 0) return <div>No order history available.</div>;
+
+    
+    if (orderList.length === 0) {
+        return (
+            <div style={{ textAlign: 'center', paddingBottom: '200px',paddingTop:'100px', fontSize: '1.5rem', color: 'white' }}>
+                <p>You haven't placed any orders yet.</p>
+                <p>Explore our amazing collection of games and make your first purchase!</p>
+                <Button variant="contained"  style={{ backgroundColor: '#a6cf92', color: '#FFFFFF' }}>
+                    <Link to="/products" >Check out our new games</Link>
+                </Button>
+            </div>
+        );
+    }
 
     return (
         <div style={{ maxWidth: '800px', margin: 'auto', padding: '20px' }}>

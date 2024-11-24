@@ -8,6 +8,7 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 export default function Product(prop) {
     const { product, cartList, setCartList, wishList, setWishList } = prop;
     const [open, setOpen] = useState(false);
+    const [cartOpen, setCartOpen] = useState(false);
 
     function addToFav(product) {
         const isInclude = wishList.some((item) => item.videoGameInfoId === product.videoGameInfoId);
@@ -16,20 +17,22 @@ export default function Product(prop) {
             setOpen(true);
         }
     }
-
+    function addToCart(product) {
+        const isInclude = cartList.some((item) => item.videoGameInfoId === product.videoGameInfoId);
+        if (!isInclude) {
+            setCartList([...cartList, { ...product, quantity: 1 }]);
+            setCartOpen(true); 
+        }
+    }
     const handleClose = (event, reason) => {
         if (reason === "clickaway") {
             return;
         }
         setOpen(false);
+        setCartOpen(false);
     };
     console.log("Product prop:", product);
-    function addToCart(product) {
-        const isInclude = cartList.some((item) => item.videoGameInfoId === product.videoGameInfoId);
-        if (!isInclude) {
-            setCartList([...cartList, { ...product, quantity: 1 }]);
-        }
-    }
+    
     console.log(cartList, "cart");
     return (
         <div className="product-container">
@@ -71,6 +74,12 @@ export default function Product(prop) {
                     autoHideDuration={5000}
                     onClose={handleClose}
                     message={`A ${product.gameName} is added to the wishlist`}
+                />
+                <Snackbar
+                    open={cartOpen}
+                    autoHideDuration={5000}
+                    onClose={handleClose}
+                    message={`${product.gameName} has been added to your cart!`}
                 />
             </div>
         </div>
