@@ -52,7 +52,6 @@ export default function ProductDashBoard() {
         }
     };
 
-    // Fetch auxiliary data (categories, consoles, studios, publishers)
     
     const fetchData = async (url, setter) => {
         try {
@@ -79,7 +78,7 @@ export default function ProductDashBoard() {
             await axios.delete(`https://sda-3-online-backend-teamwork-ec29.onrender.com/api/v1/VideoGamesInfo/${id}`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
-            fetchAllData(); // Refresh data after deletion
+            fetchAllData(); 
         } catch (err) {
             console.error("Error deleting product:", err);
             alert("Failed to delete product. Please try again.");
@@ -155,7 +154,7 @@ export default function ProductDashBoard() {
                         params: { newGameName },
                     }
                 );
-                fetchAllData(); // Refresh data to reflect changes
+                fetchAllData(); 
             }
         } catch (error) {
             console.error("Error updating game name:", error);
@@ -174,7 +173,7 @@ export default function ProductDashBoard() {
                         params: { newYearOfRelease },
                     }
                 );
-                fetchAllData(); // Refresh data to reflect changes
+                fetchAllData(); 
             }
         } catch (error) {
             console.error("Error updating year of release:", error);
@@ -248,7 +247,6 @@ export default function ProductDashBoard() {
     const onChangeHandler = (e) => {
         const { name, value } = e.target;
 
-        // Handle multi-select fields (like categoryIds, gameStudioIds)
         if (name === 'categoryIds' || name === 'gameStudioIds') {
             setProductInfo((prevState) => ({
                 ...prevState,
@@ -279,12 +277,12 @@ export default function ProductDashBoard() {
             </Button>
             <Button
                 variant="contained"
+                color="secondary"
                 onClick={(event) => setAnchorEl(event.currentTarget)}
                 className="create-product-button"
             >
                 Create New Product
             </Button>
-
             <Popover
                 open={Boolean(anchorEl)}
                 onClose={() => setAnchorEl(null)}
@@ -305,7 +303,6 @@ export default function ProductDashBoard() {
                         required
                         className="text-field"
                     />
-                    <br />
                     <TextField
                         name="description"
                         label="Description"
@@ -315,7 +312,6 @@ export default function ProductDashBoard() {
                         required
                         className="text-field"
                     />
-                    <br />
                     <TextField
                         name="yearOfRelease"
                         label="Year of Release"
@@ -325,7 +321,6 @@ export default function ProductDashBoard() {
                         required
                         className="text-field"
                     />
-                    <br />
                     {formErrors.yearOfRelease && <p className="error-message">{formErrors.yearOfRelease}</p>}
 
                     <TextField
@@ -342,7 +337,7 @@ export default function ProductDashBoard() {
                         }}
                         className="text-field"
                     />
-                    <br />
+
                     {formErrors.totalRating && <p className="error-message">{formErrors.totalRating}</p>}
 
                     <FormControl fullWidth className="form-control">
@@ -360,7 +355,6 @@ export default function ProductDashBoard() {
                             ))}
                         </Select>
                     </FormControl>
-                    <br />
 
                     <FormControl fullWidth className="form-control">
                         <InputLabel id="categoryIds">Categories</InputLabel>
@@ -386,7 +380,6 @@ export default function ProductDashBoard() {
                             ))}
                         </Select>
                     </FormControl>
-                    <br />
 
                     <FormControl fullWidth className="form-control">
                         <InputLabel id="consoleId">Console</InputLabel>
@@ -412,6 +405,7 @@ export default function ProductDashBoard() {
                             ))}
                         </Select>
                     </FormControl>
+
                     <FormControl fullWidth className="form-control">
                         <InputLabel id="gameStudioIds">Game Studios</InputLabel>
                         <Select
@@ -436,13 +430,13 @@ export default function ProductDashBoard() {
                             ))}
                         </Select>
                     </FormControl>
-                    <br />
 
                     <Button variant="contained" onClick={createProduct} className="create-button">
                         Create Product
                     </Button>
                 </div>
             </Popover>
+
 
             <Paper className="data-grid-container">
                 <DataGrid

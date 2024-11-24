@@ -10,13 +10,12 @@ export default function UserManagementDashboard() {
     const [totalUserCount, setTotalUserCount] = useState(0);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [currentPage, setCurrentPage] = useState(1);
-    const limit = 5; 
+    const [currentPage, setCurrentPage] = useState(0); 
+    const limit = 5;
     const navigate = useNavigate();
 
-    
     const fetchUsers = async (page) => {
-        const offset = (page - 1) * limit;
+        const offset = page * limit;
         const token = localStorage.getItem("token");
 
         try {
@@ -44,13 +43,12 @@ export default function UserManagementDashboard() {
         navigate(-1);
     };
 
-    // Delete user
     const deleteUser = async (personId) => {
         const token = localStorage.getItem("token");
 
         try {
             await axios.delete(
-                `https://sda-3-online-backend-teamwork-ec29.onrender.com/api/v1/SystemAdmin/${personId}`,
+                `https://sda-3-online-backend-teamwork-ec29.onrender.com/api/v1/SystemAdmin?personid=${personId}`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -71,31 +69,29 @@ export default function UserManagementDashboard() {
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error.message}</p>;
 
-   
     const columns = [
-        { field: "personName", headerName: "Name", flex: 1 },
-        { field: "personEmail", headerName: "Email", flex: 1 },
-        { field: "age", headerName: "Age", flex: 1 },
+        { field: "personName", headerName: "Name", width: 200 },
+        { field: "personEmail", headerName: "Email", width: 200 },
+        { field: "age", headerName: "Age", width: 200 },
         {
             field: "actions",
             headerName: "Actions",
             sortable: false,
+            width: 200,
             renderCell: (params) => (
                 <Button
-                    variant="contained"
-                    color="secondary"
+                    variant="outlined" color="error"
                     onClick={() => deleteUser(params.row.personId)}
                 >
                     Delete
                 </Button>
             ),
-            flex: 0.5,
+            
         },
     ];
 
-   
-    const handlePageChange = (newPage) => {
-        setCurrentPage(newPage + 1); 
+    const handlePageChange = (params) => {
+        setCurrentPage(params.page); 
     };
 
     return (
@@ -117,6 +113,7 @@ export default function UserManagementDashboard() {
                 columns={columns}
                 pageSize={limit}
                 rowCount={totalUserCount}
+                pagination
                 paginationMode="server"
                 onPageChange={handlePageChange}
                 getRowId={(row) => row.personId}
@@ -124,6 +121,7 @@ export default function UserManagementDashboard() {
                 disableSelectionOnClick
                 loading={loading}
             />
+            
         </div>
     );
 }

@@ -65,7 +65,7 @@ export default function UserSignUp() {
     >
       <Container component="main" maxWidth="sm">
         <Paper elevation={3} sx={{ padding: 2, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <Typography variant="h5" gutterBottom>
+          <Typography variant="h5" gutterBottom color="secondary">
             Sign Up
           </Typography>
           <TextField
@@ -112,7 +112,7 @@ export default function UserSignUp() {
           <Box sx={{ width: '100%', mt: 2 }}>
             <Button
               variant="contained"
-              color="primary"
+              color="secondary"
               fullWidth
               onClick={SignUpNewUser}
             >

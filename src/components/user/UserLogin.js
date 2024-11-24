@@ -103,7 +103,7 @@ export default function UserLogin({ getUserData, getSystemAdminData }) {
             boxShadow: 3,
           }}
         >
-          <Typography variant="h4" gutterBottom color="primary">
+          <Typography variant="h4" gutterBottom color="secondary">
             Login
           </Typography>
           <TextField
@@ -137,7 +137,7 @@ export default function UserLogin({ getUserData, getSystemAdminData }) {
           </FormControl>
           <Button
             variant="contained"
-            color="primary"
+            color="secondary"
             fullWidth
             onClick={logInUser}
             sx={{ mt: 2, mb: 2 }}

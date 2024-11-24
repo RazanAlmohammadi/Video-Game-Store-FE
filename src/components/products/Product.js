@@ -36,7 +36,14 @@ export default function Product(prop) {
             <div className="product-title">
                 {product.gameName}
             </div>
-            <img className="product-image" src={product.gamePicturePath} alt={product.gameName} />
+            <div className="product-image-wrapper">
+                <img
+                    className="product-image"
+                    src={product.gamePicturePath}
+                    alt={product.gameName}
+                />
+            </div>
+
           <div className="product-rating">
                 Rating: {product.totalRating}
             </div>
